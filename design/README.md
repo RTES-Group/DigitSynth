@@ -10,18 +10,16 @@
  ```
  ON STARTUP: 
 
-  FOR each analogue sensor (0 to 3): 
+  FOR each analogue sensor (0 to 7): 
 
     set up ADC channel 
 
     assign value-change callback
 
 
-  FOR each digital button (0 to 3): 
+  FOR each button (0 to 3) 
 
-  set up GPIO pin 
-
-  attach interrupt on PRESS and RELEASE
+     attach interrupt on PRESS and RELEASE
 
 
   set active_parameter = PARAMETER_0  (default) 
@@ -149,15 +147,6 @@ CC_MAP  (parameter -> MIDI CC number):
 
   Parameter D -> CC TBD
 ```
-8. Classes
-
-   - AnalogSensor - ADC read, smoothing, value scaling 
-
-   - DigitalButton - GPIO setup, ISR, debounce 
-
-   - EventQueue - thread-safe queue with mutex 
-
-   - MidiController - sends CC values, manages parameter mapping 
  
 ## Hardware architecture
 ## Circuit diagrams 
