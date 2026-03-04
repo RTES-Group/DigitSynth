@@ -1352,6 +1352,12 @@
 		)
 	)
 	(junction
+		(at 181.61 35.56)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "4aa4066d-25bc-4527-a084-9df2d3e2554b")
+	)
+	(junction
 		(at 212.09 76.2)
 		(diameter 1.016)
 		(color 0 0 0 0)
@@ -1475,6 +1481,16 @@
 	)
 	(wire
 		(pts
+			(xy 198.12 55.88) (xy 181.61 55.88)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "002f2894-4b04-490f-b6b5-de871dc142e7")
+	)
+	(wire
+		(pts
 			(xy 173.99 45.72) (xy 196.85 45.72)
 		)
 		(stroke
@@ -1505,7 +1521,7 @@
 	)
 	(wire
 		(pts
-			(xy 173.99 35.56) (xy 198.12 35.56)
+			(xy 173.99 35.56) (xy 181.61 35.56)
 		)
 		(stroke
 			(width 0)
@@ -1632,6 +1648,16 @@
 			(type solid)
 		)
 		(uuid "37f434c4-a5b5-4f48-a762-cfb7b89beee8")
+	)
+	(wire
+		(pts
+			(xy 181.61 35.56) (xy 198.12 35.56)
+		)
+		(stroke
+			(width 0)
+			(type solid)
+		)
+		(uuid "38ea84c7-fec5-4ad9-b757-bbea37ccf7a6")
 	)
 	(wire
 		(pts
@@ -1862,6 +1888,16 @@
 			(type solid)
 		)
 		(uuid "b53f9756-e212-4b62-80bb-bd3d52b118ed")
+	)
+	(wire
+		(pts
+			(xy 181.61 55.88) (xy 181.61 35.56)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b653b808-9861-40ca-ad1e-04338d0a61e5")
 	)
 	(wire
 		(pts
@@ -2316,7 +2352,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-00005dd3ddee")
-		(property "Reference" "J1_RPI"
+		(property "Reference" "J_RPI1"
 			(at 212.09 33.02 0)
 			(effects
 				(font
@@ -2536,7 +2572,7 @@
 		(instances
 			(project "DigitSynth"
 				(path "/ad908932-4812-48b1-9c87-6bb086cd45d9/91c7c2d9-e939-40fa-a472-fe4cf5507780"
-					(reference "J1_RPI")
+					(reference "J_RPI1")
 					(unit 1)
 				)
 			)
