@@ -1,11 +1,16 @@
 #ifndef SPI_H_
 #define SPI_H_
 
+#include <optional>
 #include <string>
 #include <vector>
 #include <cstdint>
 
 #include "types.h"
+
+#define SPI_MAX_DEVICES 4
+
+typedef uint8_t SpiDevice;
 
 struct SpiConfig {
     uint8_t   bitsPerWord:   8,
@@ -16,18 +21,36 @@ struct SpiConfig {
     Frequency clockFrequency;
 };
 
+/**
+ * Each instance of this class represents one SPI interface, not one SPI device. 
+ * Multiple devices can be added to this class, each using a different ~CS pin. 
+ */
 class Spi {
 public:
 
-    int write(std::vector<uint8_t> *);
-    int read(std::vector<uint8_t> *);
+    int write(std::vector<uint8_t> *, SpiDevice);
+    int read(std::vector<uint8_t> *,  SpiDevice);
 
+    /**
+     * @return none if there are already SPI_MAX_DEVICES devices in use, an SpiDevice otherwise 
+     */
+    std::optional<SpiDevice> addDevice();
+    
     Spi(std::string, SpiConfig);
     ~Spi();
 
 private:
     int fd;
+    uint8_t nDevices;  
     std::string path;
+    
+    // TODO: decide on pins
+    static const constexpr uint8_t csPins[SPI_MAX_DEVICES] = {
+        18,
+        19,
+        20, 
+        21, 
+    };
 
 };
 

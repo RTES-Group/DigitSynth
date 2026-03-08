@@ -5,6 +5,7 @@
 #include <cstring>
 #include <fcntl.h>
 #include <iostream>
+#include <optional>
 #include <sys/types.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
@@ -39,14 +40,29 @@ Spi::~Spi() {
     checkError(close(this->fd));
 }
 
-int Spi::read(std::vector<uint8_t> *dest) {
+int Spi::read(std::vector<uint8_t> *dest, SpiDevice device) {
+    (void) device; // TODO: add something to handle chip select
+    
     uint8_t *internalBuf = dest->data();
 
     return read(fd, internalBuf, dest->size());
 }
 
-int Spi::write(std::vector<uint8_t> *src) {
+int Spi::write(std::vector<uint8_t> *src, SpiDevice device) {
+    (void) device; // TODO: add something to handle chip select
+    
     uint8_t *internalBuf = src->data();
 
     return write(fd, internalBuf, src->size());
+}
+
+std::optional<SpiDevice> Spi::addDevice() {
+    if (this->nDevices >= SPI_MAX_DEVICES) {
+        return {};
+    }
+    
+    auto spiDevice = (SpiDevice) this->nDevices;
+    this->nDevices++;
+    
+    return spiDevice;
 }
