@@ -12,7 +12,7 @@
 
 typedef uint8_t SpiDevice;
 
-struct SpiConfig {
+struct SpiSettings {
     uint8_t   bitsPerWord:   8,
               clockPolarity: 1, // Polarity of the clock during idle phase
               clockPhase:    1, // Data read/written on rising edge (0) or falling edge (1)
@@ -31,12 +31,14 @@ public:
     int write(std::vector<uint8_t> *, SpiDevice);
     int read(std::vector<uint8_t> *,  SpiDevice);
 
+    void updateSettings(SpiSettings);
+    
     /**
      * @return none if there are already SPI_MAX_DEVICES devices in use, an SpiDevice otherwise 
      */
     std::optional<SpiDevice> addDevice();
     
-    Spi(std::string, SpiConfig);
+    Spi(std::string, SpiSettings);
     ~Spi();
 
 private:
