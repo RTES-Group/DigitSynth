@@ -1,5 +1,5 @@
 #include "adc-driver.h"
-#include "callback-types.h"
+#include "types.h"
 
 AdcDriver::AdcDriver() {}
 
@@ -14,19 +14,15 @@ void AdcDriver::registerCallback(AdcCallback callback) {
     this->callbacks.push_back(callback);
 }
 
-void AdcDriver::begin() {
-    this->active = true;
+void AdcDriver::beginContinuous() {
 
-    while (this->active) {
-        // wait on data-ready
+    this->continuousConversion = std::thread([] {
 
-        // collect data
-
-        AdcData data = 0;
-        notifySubscribers(data);
-    }
+    });
 }
 
+
+
 void AdcDriver::cancel() {
-    this->active = false;
+    this->conversionActive = false;
 }

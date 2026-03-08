@@ -9,7 +9,7 @@ bool test_singleSubscriber() {
     adcDriver.registerCallback(std::function<void(AdcData)>([&x, &adcDriver] (AdcData data) { x = data; adcDriver.cancel(); }));
 
     std::thread t = std::thread([&adcDriver] {
-        adcDriver.begin();
+        adcDriver.beginContinuous();
     });
 
     t.join();
@@ -32,7 +32,7 @@ bool test_multipleSubscribers() {
     }
 
     std::thread t = std::thread([&adcDriver] {
-        adcDriver.begin();
+        adcDriver.beginContinuous();
     });
 
     t.join();
