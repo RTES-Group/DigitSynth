@@ -5,6 +5,8 @@
 #include <cstring>
 #include <fcntl.h>
 #include <iostream>
+#include <memory>
+#include <mutex>
 #include <optional>
 #include <sys/types.h>
 #include <unistd.h>
@@ -22,6 +24,33 @@ void checkError(int result) {
 Spi::Spi(std::string path, SpiSettings settings) {
     this->fd = open(path.c_str(), O_RDWR);
     checkError(this->fd);
+    
+    this->worker = std::thread([this] () {
+        std::unique_lock<std::mutex> lock(this->mut);
+        // Wake if the queues have data 
+        this->cond.wait(lock, [this] { return !this->readQueue.empty() || !this->writeQueue.empty(); });
+        
+        while (!this->readQueue.empty()) {
+            auto pair = &this->readQueue.front();
+            
+            // todo: set cs pin
+            auto buf = pair->first->data();
+            ::read(this->fd, buf, pair->first->size());
+            // todo: notify reader
+            
+            this->readQueue.pop_front();
+        }
+        
+        while (!this->writeQueue.empty()) {
+            auto pair = &this->writeQueue.front();
+            
+            // todo: set cs pin 
+            auto buf = pair->first.data();
+            ::write(this->fd, buf, pair->first.size());
+            
+            this->writeQueue.pop_front();
+        }
+    });
 
     updateSettings(settings);
 }
@@ -41,20 +70,16 @@ void Spi::updateSettings(SpiSettings settings) {
     checkError(ioctl(fd, SPI_IOC_WR_LSB_FIRST,     &bitOrder));
 }
 
-int Spi::read(std::vector<uint8_t> *dest, SpiDevice device) {
-    (void) device; // TODO: add something to handle chip select
-
-    uint8_t *internalBuf = dest->data();
-
-    return ::read(fd, internalBuf, dest->size());
+void Spi::read(std::vector<uint8_t> *dest, SpiDevice device) {
+    this->mut.lock();
+    this->readQueue.push_back(std::pair(std::unique_ptr<std::vector<uint8_t>>(dest), device));
+    this->cond.notify_one();
 }
 
-int Spi::write(std::vector<uint8_t> *src, SpiDevice device) {
-    (void) device; // TODO: add something to handle chip select
-
-    uint8_t *internalBuf = src->data();
-
-    return ::write(fd, internalBuf, src->size());
+void Spi::write(std::vector<uint8_t> src, SpiDevice device) {
+    this->mut.lock();
+    this->writeQueue.push_back(std::pair(src, device));
+    this->cond.notify_one();
 }
 
 std::optional<SpiDevice> Spi::addDevice() {
