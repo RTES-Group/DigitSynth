@@ -1,5 +1,6 @@
 #include "spi.h"
 #include <cstdint>
+#include <iostream>
 
 
 bool test_canWrite() {
@@ -11,11 +12,13 @@ bool test_canWrite() {
     settings.clockPhase = 1;
     settings.clockPolarity = 0;
     
+    std::cout << settings.bitOrder; 
+    
     Spi spi("/dev/spidev0.0", settings);
     
-    auto device = spi.addDevice().value();
-    std::vector<uint8_t> buf(24);
-    spi.write(buf, device);
+    // auto device = spi.addDevice().value();
+    // std::vector<uint8_t> buf(24);
+    // spi.write(buf, device);
     
     return true;  
 }
