@@ -46,8 +46,8 @@ public:
     Spi(std::string, SpiSettings);
     ~Spi();
 
-private:
     int fd;
+private:
     uint8_t nDevices = 0;  
     std::string path;
     std::deque<std::tuple<std::vector<uint8_t> *, SpiDevice, SpiCallback>> readQueue; 

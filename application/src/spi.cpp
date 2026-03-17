@@ -6,7 +6,6 @@
 #include <cstring>
 #include <fcntl.h>
 #include <iostream>
-#include <memory>
 #include <mutex>
 #include <optional>
 #include <vector>
@@ -33,7 +32,6 @@ Spi::Spi(std::string path, SpiSettings settings) {
         while (true) {
             std::unique_lock<std::mutex> lock(this->mut);
             // Wake if the queues have data 
-            std::cout << "hellow3\n";
             this->cond.wait(lock, [this] { return !this->readQueue.empty() || !this->writeQueue.empty(); });
             
             while (!this->readQueue.empty()) {
@@ -41,10 +39,12 @@ Spi::Spi(std::string path, SpiSettings settings) {
                 
                 std::vector<uint8_t> *vec = std::get<0>(*tuple);
                 auto buf = vec->data();
-                auto len  = vec->size(); 
+                auto len = vec->size(); 
+                std::cout << "spi vec len: " << len << std::endl;
+                std::cout << "spi device: " << std::get<1>(*tuple) << std::endl;
                 // todo: set cs pin
+                printf("%lx\n", (unsigned long) buf);
                 ssize_t bytesRead = ::read(this->fd, buf, len);
-                std::cout << bytesRead << std::endl;
                 auto callback = std::get<2>(*tuple);
                 callback(bytesRead);
                 

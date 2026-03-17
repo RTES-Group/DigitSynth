@@ -10,6 +10,7 @@
 #include <memory>
 #include <sys/types.h>
 #include <thread>
+#include <unistd.h>
 #include <vector>
 #include <wiringPi.h>
 
@@ -36,6 +37,8 @@ AdcDriver::AdcDriver(Spi *spi, AdcSettings settings) : spi(spi) {
     this->writeRegister(muxVal,    Ads1256Register::MUX);
     this->writeRegister(adconVal,  Ads1256Register::ADCON);
     this->writeRegister(ioVal,     Ads1256Register::IO);
+    
+    this->writeCommand(SELFCAL);
     
     pinMode(DRDY, INPUT);
 }
@@ -67,17 +70,26 @@ void AdcDriver::readChannel(AdcChannel channel, AdcCallback callback) {
     this->writeCommand(RDATA);
     std::this_thread::sleep_for(std::chrono::microseconds(50 * this->clockPeriod_ms));
     
-    std::array<uint8_t, 3> buf{{0, 0, 0}}; 
-    std::vector<uint8_t> vec(buf.begin(), buf.end());
+    std::vector<uint8_t> vec(3);
+
+    int br = ::read(spi.get()->fd, vec.data(), vec.size());
+    (void) br; 
+    uint32_t val = 22;
+    memcpy(&val, vec.data(), vec.size());
+    val >>= 8; 
+
+    callback(val);
     
-    this->spi.get()->read(&vec, this->spiDevice, [buf, callback] (ssize_t bytesRead) {
-        std::cout << bytesRead << std::endl;
-        if (bytesRead != 3) { callback({}); return; }
+    /*
+    this->spi.get()->read(&vec, this->spiDevice, [vec, callback] (ssize_t bytesRead) {
+        std::cout << "bytes read: " << bytesRead << std::endl;
+        std::cout << "vec len: " << vec.size() << std::endl;
+        if (bytesRead != 16) { callback({}); return; }
         
-        uint32_t val;
-        memcpy(&val, buf.data(), buf.size());
+        uint32_t val = 22;
+        memcpy(&val, vec.data(), vec.size());
         val >>= 8; 
     
         callback(val);
-    });
+        });*/
 }
