@@ -5,11 +5,13 @@
 #include <atomic>
 #include "types.h"
 
+
 struct LEDFrame {
     Brightness channels[10];   // indices 0–9 map to R1 R2 R3 R4 G1 G2 G3 B1 B2 B3
 };
 
 class TLC59711 {
+    friend class TLC59711Test;
 public:
     TLC59711(int data_pin, int clk_pin, int num_drivers = 1);
     ~TLC59711();
