@@ -18,7 +18,8 @@ typedef uint8_t  AdcChannel;
 typedef std::function<void(AdcData)>       AdcCallback;
 typedef std::function<void(ExtensionData)> ExtensionCallback;
 typedef std::function<void(ButtonData)>    ButtonCallback;
-typedef std::function<void(ssize_t)>          SpiCallback;
+typedef std::function<void(ssize_t)>       SpiCallback;
+typedef std::function<void(void)>          GpioCallback;
 
 
 #endif

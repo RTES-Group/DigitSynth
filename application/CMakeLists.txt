@@ -43,7 +43,7 @@ target_sources(digitsynth_static
 		${SOURCE_DIRECTORY}/spi.cpp
 )
 
-target_link_libraries(digitsynth)
-target_link_libraries(digitsynth_static)
+target_link_libraries(digitsynth -lgpiodcxx)
+target_link_libraries(digitsynth_static -lgpiodcxx)
 
 add_subdirectory(test)
