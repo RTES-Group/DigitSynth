@@ -1,5 +1,4 @@
 #include "spi.h"
-#include "types.h"
 
 #include <cerrno>
 #include <cstdint>
