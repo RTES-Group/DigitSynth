@@ -48,3 +48,5 @@
 
 //     return success ? 0 : 1;
 // }
+
+int main() { return 0; }
