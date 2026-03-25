@@ -1,9 +1,11 @@
+#include <chrono>
 #include <cmath>
 #include <cstring>
 #include <iostream>
 #include <thread>
 #include "adc-driver.h"
 #include "foo.h"
+#include "gpio.h"
 #include "spi.h"
 
 
@@ -11,37 +13,13 @@ int main(int argc, char **argv) {
     (void) argc;
     (void) argv; 
     
-    SpiSettings spiSettings{};
-    spiSettings.bitOrder = 0;
-    spiSettings.bitsPerWord = 8;
-    spiSettings.clockFrequency = 1'000'000;
-    spiSettings.clockPolarity = 0;
-    spiSettings.clockPhase = 1; 
-    Spi spi("/dev/spidev0.0", spiSettings);
+    gpio::setupGpio();
     
-    AdcSettings adcSettings{};
-    adcSettings.analogueInputBuffer = false;
-    adcSettings.autoCalibration = false;
-    adcSettings.clockOut = true;
-    adcSettings.clockRate = AdsClockRate::R30000;
-    adcSettings.logGain = 0;
-    adcSettings.lsbFirst = false;
-    AdcDriver adc(&spi, adcSettings);
-    
-    while (true) {
-        std::cout << "_______________________________\n";
-        for (int i = 0; i < 8; i++) {
-            adc.readChannel(i, [i] (AdcData data) {
-                if (data.has_value()) { std::cout << data.value() << std::endl; }
-                else { 
-                    std::cout << i << ": no value: " << std::strerror(errno) << std::endl; 
-                }
-            }); 
-        }
+    while (1) {
+        gpio::setPin("PIN_22", 0);
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        gpio::setPin("PIN_22", 1);
     }
-    
-   std::this_thread::sleep_for(std::chrono::seconds(2));
-    
     
     return 0;
 }
