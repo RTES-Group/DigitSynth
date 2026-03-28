@@ -1200,6 +1200,131 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "power:+5V"
+			(power)
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "+5V"
+				(at 0 3.556 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"+5V\""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "+5V_0_1"
+				(polyline
+					(pts
+						(xy -0.762 1.27) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "+5V_1_1"
+				(pin power_in line
+					(at 0 0 90)
+					(length 0)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "power:GND"
 			(power)
 			(pin_numbers
@@ -1439,6 +1564,12 @@
 		(uuid "bc720564-c90d-4b95-8244-28f8fff9da2b")
 	)
 	(junction
+		(at 243.84 40.64)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "be361cb5-8295-46a7-9a5f-893ac0fda023")
+	)
+	(junction
 		(at 76.2 22.86)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -1467,6 +1598,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "d93baac8-cacc-4bc6-975c-5024751fbd0c")
+	)
+	(junction
+		(at 226.06 43.18)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "db1ec644-89f0-41ee-92d5-c0a6906737b2")
 	)
 	(junction
 		(at 97.79 60.96)
@@ -2555,28 +2692,6 @@
 		)
 		(uuid "021ccee0-ffb4-4388-94ed-0c13913ddb0d")
 	)
-	(hierarchical_label "+5V_PI"
-		(shape input)
-		(at 81.28 22.86 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "0b52f30d-a174-4c59-a914-98b2784c56bf")
-	)
-	(hierarchical_label "+5V_PI"
-		(shape input)
-		(at 243.84 40.64 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "4a5d8c06-169a-46e5-a7d5-0c66fcc3ad98")
-	)
 	(hierarchical_label "FLEX3_V"
 		(shape output)
 		(at 38.1 60.96 180)
@@ -2665,17 +2780,6 @@
 		)
 		(uuid "8a095239-a0e2-4d4e-abc4-1c78fda05380")
 	)
-	(hierarchical_label "+3V3_PI"
-		(shape input)
-		(at 138.43 29.21 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "8e41d66b-e23c-4983-b335-8e8070ef376a")
-	)
 	(hierarchical_label "BTN_1"
 		(shape input)
 		(at 158.75 66.04 180)
@@ -2686,17 +2790,6 @@
 			(justify right)
 		)
 		(uuid "9be97c5c-9954-4050-bbe2-ba0eddeee00d")
-	)
-	(hierarchical_label "+3V3_PI"
-		(shape input)
-		(at 226.06 43.18 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "c5ec03b7-d7c8-4cfb-ad53-83e0f54b5c5d")
 	)
 	(hierarchical_label "FLEX2_V"
 		(shape output)
@@ -2779,7 +2872,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TestPoint:TestPoint_THTPad_D1.0mm_Drill0.5mm"
 			(at 64.77 44.45 0)
 			(effects
 				(font
@@ -2819,6 +2912,138 @@
 		)
 	)
 	(symbol
+		(lib_id "power:+5V")
+		(at 243.84 40.64 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "0a9879f7-357d-4a12-b95b-514a8ecee396")
+		(property "Reference" "#PWR027"
+			(at 243.84 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V_PI"
+			(at 243.84 35.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 243.84 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 243.84 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 243.84 40.64 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "9ecd5fa3-8c71-40d6-8c6a-0c7b79d77dec")
+		)
+		(instances
+			(project "DigitSynth"
+				(path "/ad908932-4812-48b1-9c87-6bb086cd45d9/bdf9e645-3139-455a-8eba-456cb221c14e"
+					(reference "#PWR027")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 81.28 22.86 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "0ac98e7f-48e0-4371-9374-0ad529ea8186")
+		(property "Reference" "#PWR028"
+			(at 81.28 26.67 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V_PI"
+			(at 81.28 17.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 81.28 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 81.28 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 81.28 22.86 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "5fc61c26-9b61-4909-bbeb-659403da676e")
+		)
+		(instances
+			(project "DigitSynth"
+				(path "/ad908932-4812-48b1-9c87-6bb086cd45d9/bdf9e645-3139-455a-8eba-456cb221c14e"
+					(reference "#PWR028")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 76.2 69.85 0)
 		(unit 1)
@@ -2846,7 +3071,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 74.422 69.85 90)
 			(effects
 				(font
@@ -2865,6 +3090,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 76.2 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C22790"
 			(at 76.2 69.85 0)
 			(effects
 				(font
@@ -2914,7 +3148,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TestPoint:TestPoint_THTPad_D1.0mm_Drill0.5mm"
 			(at 41.91 44.45 0)
 			(effects
 				(font
@@ -2979,7 +3213,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 87.63 60.198 90)
 			(effects
 				(font
@@ -2999,6 +3233,15 @@
 		)
 		(property "Description" "Resistor"
 			(at 87.63 58.42 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C21190"
+			(at 87.63 58.42 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3115,7 +3358,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 87.3252 73.66 0)
 			(effects
 				(font
@@ -3134,6 +3377,15 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 86.36 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C1615"
 			(at 86.36 69.85 0)
 			(effects
 				(font
@@ -3185,7 +3437,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 227.0252 80.01 0)
 			(effects
 				(font
@@ -3204,6 +3456,15 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 226.06 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C14663"
 			(at 226.06 76.2 0)
 			(effects
 				(font
@@ -3253,7 +3514,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 83.82 62.738 90)
 			(effects
 				(font
@@ -3273,6 +3534,15 @@
 		)
 		(property "Description" "Resistor"
 			(at 83.82 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C21190"
+			(at 83.82 60.96 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3323,7 +3593,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 98.7552 73.66 0)
 			(effects
 				(font
@@ -3342,6 +3612,15 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 97.79 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C1615"
 			(at 97.79 69.85 0)
 			(effects
 				(font
@@ -3393,7 +3672,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 115.062 38.1 90)
 			(effects
 				(font
@@ -3412,6 +3691,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 116.84 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C25804"
 			(at 116.84 38.1 0)
 			(effects
 				(font
@@ -3443,7 +3731,6 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(fields_autoplaced yes)
 		(uuid "3611ff7f-c928-4ff6-bd9c-de923e099c3c")
 		(property "Reference" "#PWR02"
 			(at 81.28 82.55 0)
@@ -3455,11 +3742,12 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 81.28 81.28 0)
+			(at 80.772 81.534 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
@@ -3529,7 +3817,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 244.8052 80.01 0)
 			(effects
 				(font
@@ -3548,6 +3836,15 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 243.84 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C15850"
 			(at 243.84 76.2 0)
 			(effects
 				(font
@@ -3599,7 +3896,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 110.1852 73.66 0)
 			(effects
 				(font
@@ -3626,6 +3923,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC Part #" "C1615"
+			(at 109.22 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "6c045aa3-3ef9-40e5-afa4-e5d736895867")
 		)
@@ -3636,6 +3942,73 @@
 			(project "DigitSynth"
 				(path "/ad908932-4812-48b1-9c87-6bb086cd45d9/bdf9e645-3139-455a-8eba-456cb221c14e"
 					(reference "C_FILT2")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 138.43 29.21 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "668d55c3-ae36-4c58-99a2-6e639082a540")
+		(property "Reference" "#PWR025"
+			(at 134.62 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3_PI"
+			(at 142.24 29.2099 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 138.43 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 138.43 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 138.43 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "73f99d56-3074-494d-a692-fa9c436b79f1")
+		)
+		(instances
+			(project "DigitSynth"
+				(path "/ad908932-4812-48b1-9c87-6bb086cd45d9/bdf9e645-3139-455a-8eba-456cb221c14e"
+					(reference "#PWR025")
 					(unit 1)
 				)
 			)
@@ -3667,7 +4040,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 80.01 65.278 90)
 			(effects
 				(font
@@ -3687,6 +4060,15 @@
 		)
 		(property "Description" "Resistor"
 			(at 80.01 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C21190"
+			(at 80.01 63.5 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -3737,7 +4119,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 40.132 69.85 90)
 			(effects
 				(font
@@ -3756,6 +4138,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 41.91 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C22790"
 			(at 41.91 69.85 0)
 			(effects
 				(font
@@ -3805,7 +4196,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TestPoint:TestPoint_THTPad_D1.0mm_Drill0.5mm"
 			(at 76.2 44.45 0)
 			(effects
 				(font
@@ -3872,7 +4263,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 237.1852 80.01 0)
 			(effects
 				(font
@@ -3899,6 +4290,15 @@
 				(hide yes)
 			)
 		)
+		(property "LCSC Part #" "C14663"
+			(at 236.22 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "fe498fc0-1f8f-40a0-b65f-8e9d8dc2383a")
 		)
@@ -3909,6 +4309,73 @@
 			(project ""
 				(path "/ad908932-4812-48b1-9c87-6bb086cd45d9/bdf9e645-3139-455a-8eba-456cb221c14e"
 					(reference "C_AVDD_1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 226.06 43.18 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "8fe2dc6a-258b-48fe-8810-0b3479ad75d2")
+		(property "Reference" "#PWR026"
+			(at 222.25 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3V3_PI"
+			(at 229.87 43.1799 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 226.06 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 226.06 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 226.06 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "73d06783-e296-4b74-944f-1e587d6383c7")
+		)
+		(instances
+			(project "DigitSynth"
+				(path "/ad908932-4812-48b1-9c87-6bb086cd45d9/bdf9e645-3139-455a-8eba-456cb221c14e"
+					(reference "#PWR026")
 					(unit 1)
 				)
 			)
@@ -3942,7 +4409,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 131.572 38.1 90)
 			(effects
 				(font
@@ -3961,6 +4428,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 133.35 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C25804"
 			(at 133.35 38.1 0)
 			(effects
 				(font
@@ -4009,7 +4485,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 91.44 57.658 90)
 			(effects
 				(font
@@ -4029,6 +4505,15 @@
 		)
 		(property "Description" "Resistor"
 			(at 91.44 55.88 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C21190"
+			(at 91.44 55.88 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4077,7 +4562,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TestPoint:TestPoint_THTPad_D1.0mm_Drill0.5mm"
 			(at 53.34 44.45 0)
 			(effects
 				(font
@@ -4142,7 +4627,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_Molex:Molex_KK-254_AE-6410-02A_1x02_P2.54mm_Vertical"
 			(at 48.26 44.45 0)
 			(effects
 				(font
@@ -4212,7 +4697,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 51.562 69.85 90)
 			(effects
 				(font
@@ -4231,6 +4716,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 53.34 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C22790"
 			(at 53.34 69.85 0)
 			(effects
 				(font
@@ -4280,7 +4774,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_Molex:Molex_KK-254_AE-6410-02A_1x02_P2.54mm_Vertical"
 			(at 36.83 44.45 0)
 			(effects
 				(font
@@ -4350,7 +4844,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 62.992 69.85 90)
 			(effects
 				(font
@@ -4369,6 +4863,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 64.77 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C22790"
 			(at 64.77 69.85 0)
 			(effects
 				(font
@@ -4550,7 +5053,7 @@
 				)
 			)
 		)
-		(property "Footprint" "ADS1256IDBR:SOP65P780X200-28N"
+		(property "Footprint" "Package_SO:SSOP-28_5.3x10.2mm_P0.65mm"
 			(at 187.96 76.2 0)
 			(effects
 				(font
@@ -4608,26 +5111,6 @@
 				(hide yes)
 			)
 		)
-		(property "Price" "None"
-			(at 187.96 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "SnapEDA_Link" "https://www.snapeda.com/parts/ADS1256IDBR/Texas+Instruments/view-part/?ref=snap"
-			(at 187.96 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
 		(property "MP" "ADS1256IDBR"
 			(at 187.96 76.2 0)
 			(effects
@@ -4638,33 +5121,12 @@
 				(hide yes)
 			)
 		)
-		(property "Purchase-URL" "https://www.snapeda.com/api/url_track_click_mouser/?unipart_id=397091&manufacturer=Texas Instruments&part_name=ADS1256IDBR&search_term=ads1256"
+		(property "LCSC Part #" "C28186"
 			(at 187.96 76.2 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Availability" "In Stock"
-			(at 187.96 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
-				(hide yes)
-			)
-		)
-		(property "Check_prices" "https://www.snapeda.com/parts/ADS1256IDBR/Texas+Instruments/view-part/?ref=eda"
-			(at 187.96 76.2 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify bottom)
 				(hide yes)
 			)
 		)
@@ -4789,7 +5251,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 122.682 38.1 90)
 			(effects
 				(font
@@ -4808,6 +5270,15 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 124.46 38.1 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C25804"
 			(at 124.46 38.1 0)
 			(effects
 				(font
@@ -4857,7 +5328,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_Molex:Molex_KK-254_AE-6410-02A_1x02_P2.54mm_Vertical"
 			(at 59.69 44.45 0)
 			(effects
 				(font
@@ -4925,7 +5396,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_Molex:Molex_KK-254_AE-6410-02A_1x02_P2.54mm_Vertical"
 			(at 71.12 44.45 0)
 			(effects
 				(font
@@ -4995,7 +5466,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 121.6152 73.66 0)
 			(effects
 				(font
@@ -5014,6 +5485,15 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor"
+			(at 120.65 69.85 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part #" "C1615"
 			(at 120.65 69.85 0)
 			(effects
 				(font

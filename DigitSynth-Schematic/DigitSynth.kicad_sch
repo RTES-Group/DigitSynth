@@ -729,46 +729,6 @@
 				(justify right)
 			)
 		)
-		(pin "FLEX1_V" output
-			(at 91.44 118.11 180)
-			(uuid "dd32395e-8820-4121-a5e7-041e1fb5a753")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "FLEX2_V" output
-			(at 91.44 113.03 180)
-			(uuid "0c5d30c5-93cc-4cb6-84a9-9f7a503067e3")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "FLEX3_V" output
-			(at 91.44 107.95 180)
-			(uuid "a0e3cb21-621a-400d-a0a1-e50d3a6b2d0b")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(pin "FLEX4_V" output
-			(at 91.44 104.14 180)
-			(uuid "1b243925-263d-4f7d-867a-ec7d41617bb3")
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
 		(pin "SPI0_MISO" output
 			(at 111.76 83.82 90)
 			(uuid "083e9c74-c664-4846-b378-180e57e6b463")
