@@ -1,15 +1,8 @@
-//
-//  ModeManager.hpp
-//  digitSynth
-//
-//  Created by Finn McConville on 30/03/2026.
-//
-
 #ifndef ModeManager_hpp
 #define ModeManager_hpp
 
 #include <stdio.h>
-#include <MidiTypes.h>
+#include "MidiTypes.hpp"
 
 class ModeManager {
 public:
@@ -17,8 +10,8 @@ public:
     ControlMode getPreviousMode();
     void updateMode(int index);
 private:
-    ControlMode current_controlMode;
-    ControlMode previous_controlMode;
+    ControlMode current_controlMode = EQ;
+    ControlMode previous_controlMode = EQ;
 };
 
 #endif /* ModeManager_hpp */
