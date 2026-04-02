@@ -3,10 +3,11 @@
 
 #include <thread>
 
-// bool test_singleSubscriber() {
-//     AdcDriver adcDriver;
-//     AdcData x = 10;
-//     adcDriver.registerCallback(std::function<void(AdcData)>([&x, &adcDriver] (AdcData data) { x = data; adcDriver.cancel(); }));
+/* 
+bool test_singleSubscriber() {
+    AdcDriver adcDriver;
+    AdcData x = 10;
+    adcDriver.registerCallback(std::function<void(AdcData)>([&x, &adcDriver] (AdcData data) { x = data; adcDriver.cancel(); }));
 
 //     std::thread t = std::thread([&adcDriver] {
 //         adcDriver.beginContinuous();
@@ -37,14 +38,15 @@
 
 //     t.join();
 
-//     return x == 10 ? 0 : 1;
-// }
+    return x == 10 ? 0 : 1;
+}
+*/
 
 // int main() {
 //     bool success = true;
 
-//     success &= test_singleSubscriber();
-//     success &= test_multipleSubscribers();
+    // success &= test_singleSubscriber();
+    // success &= test_multipleSubscribers();
 
 //     return success ? 0 : 1;
 // }

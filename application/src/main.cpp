@@ -1,3 +1,7 @@
+#include <chrono>
+#include <cmath>
+#include <cstring>
+#include <gpiod.hpp>
 #include <iostream>
 #include <thread>
 #include <chrono>

@@ -1,12 +1,17 @@
 #ifndef SPI_H_
 #define SPI_H_
 
+#include <condition_variable>
+#include <deque>
+#include <memory>
+#include <thread>
 #include <optional>
 #include <string>
 #include <vector>
 #include <cstdint>
 
 #include "types.h"
+#include "pin-map.h"
 
 #define SPI_MAX_DEVICES 4
 
@@ -28,8 +33,8 @@ struct SpiSettings {
 class Spi {
 public:
 
-    int write(std::vector<uint8_t> *, SpiDevice);
-    int read(std::vector<uint8_t> *,  SpiDevice);
+    void write(std::vector<uint8_t>, SpiDevice);
+    void read(std::vector<uint8_t> *, SpiDevice, SpiCallback);
 
     void updateSettings(SpiSettings);
     
@@ -41,14 +46,19 @@ public:
     Spi(std::string, SpiSettings);
     ~Spi();
 
-private:
     int fd;
-    uint8_t nDevices;  
+private:
+    uint8_t nDevices = 0;  
     std::string path;
+    std::deque<std::tuple<std::vector<uint8_t> *, SpiDevice, SpiCallback>> readQueue; 
+    std::deque<std::tuple<std::vector<uint8_t>, SpiDevice>> writeQueue; 
+    std::thread worker; 
+    std::mutex mut;
+    std::condition_variable cond;
     
     // TODO: decide on pins
     static const constexpr uint8_t csPins[SPI_MAX_DEVICES] = {
-        18,
+        GPIO22,
         19,
         20, 
         21, 
