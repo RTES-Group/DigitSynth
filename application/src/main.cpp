@@ -1,16 +1,47 @@
+#include <chrono>
+#include <cmath>
+#include <cstdint>
+#include <cstdio>
+#include <cstring>
+#include <fcntl.h>
+#include <gpiod.hpp>
 #include <iostream>
+#include "adc-driver.h"
+#include "flex-sensor.h"
 #include "foo.h"
+#include "gpio.h"
+#include "types.h"
+#include <linux/spi/spi.h>
+#include <linux/spi/spidev.h>
+#include <sys/ioctl.h>
+#include <thread>
+#include <unistd.h>
+#include <ads1115rpi.h>
 
+void callback(float f) {
+    std::cout << f << std::endl;
+    fflush(stdout);
+} 
 
 int main(int argc, char **argv) {
-    std::cout << "\nStarting DigitSynth application\nArguments: \n";
-
-    for (int i = 0; i < argc; i++) {
-	std::cout << "\t" << argv[i] << "\n"; 
-    }
-
-    auto foo = Foo(10);
-    std::cout << foo.do_something('a') << "\n";
-
+    (void) argc;
+    (void) argv; 
+  
+    gpio::setupGpio();
+    FlexSensor sensor;
+    
+    sensor.begin();
+    sensor.registerCallback([] (std::array<ExtensionData, 4> data) {
+        std::cout << data[0] << std::endl;
+        std::cout << data[1] << std::endl;
+        std::cout << data[2] << std::endl;
+        std::cout << data[3] << std::endl;
+        std::cout << std::endl;
+    });
+   
+    getchar();
+    
+    (void) sensor;
+    
     return 0;
 }

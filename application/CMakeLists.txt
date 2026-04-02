@@ -2,12 +2,13 @@ cmake_minimum_required(VERSION 3.23)
 
 # === Compiler options ===
 add_compile_options(-Wall -Wextra -Wpedantic -Werror)
-if (NOT ${RELEASE} EQUAL 1)
-	message(STATUS "Building in debug mode\n")
-	add_compile_options(-O0 -g)
+if (NOT ${RELEASE} EQUAL 0)
+    add_compile_options(-O3)
+	message(STATUS "Building in release mode ${RELEASE}\n")
 else()
-	add_compile_options(-O3)
-	message(STATUS "Building in release mode\n")
+    message(STATUS "Building in debug mode ${RELEASE}\n")
+	add_compile_options(-O0 -ggdb)
+   set(CMAKE_BUILD_TYPE Debug)
 endif()
 
 
@@ -29,6 +30,8 @@ target_sources(digitsynth
 		${SOURCE_DIRECTORY}/button-driver.cpp
 		${SOURCE_DIRECTORY}/extension-sensor-driver.cpp
 		${SOURCE_DIRECTORY}/spi.cpp
+		${SOURCE_DIRECTORY}/gpio.cpp
+		${SOURCE_DIRECTORY}/flex-sensor.cpp
 )
 
 target_sources(digitsynth_static
@@ -39,9 +42,12 @@ target_sources(digitsynth_static
 		${SOURCE_DIRECTORY}/button-driver.cpp
 		${SOURCE_DIRECTORY}/extension-sensor-driver.cpp
 		${SOURCE_DIRECTORY}/spi.cpp
+		${SOURCE_DIRECTORY}/gpio.cpp
 )
 
-target_link_libraries(digitsynth -lwiringPi)
-target_link_libraries(digitsynth_static -lwiringPi)
+link_directories("/usr/local/lib/")
+
+target_link_libraries(digitsynth -lgpiodcxx libads1115rpi_static.a)
+target_link_libraries(digitsynth_static -lgpiodcxx -lads1115rpi)
 
 add_subdirectory(test)
