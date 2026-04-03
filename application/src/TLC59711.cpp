@@ -58,7 +58,7 @@ void TLC59711::worker() {
 
     gpiod::line_config line_config;
     line_config.add_line_settings(
-        { _data_pin, _clk_pin },
+        { static_cast<unsigned int>(_data_pin), static_cast<unsigned int>(_clk_pin) },
         gpiod::line_settings()
             .set_direction(gpiod::line::direction::OUTPUT)
             .set_output_value(gpiod::line::value::INACTIVE)

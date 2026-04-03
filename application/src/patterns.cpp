@@ -18,13 +18,13 @@ void pattern_ripple(TLC59711& tlc) {
         const float t_secs = std::chrono::duration<float>(
             std::chrono::steady_clock::now() - t_start).count();
 
-        LEDFrame frame{};
+        TLC59711::Channels channels{};
         for (int f = 0; f < N_FINGERS; ++f) {
             const float raw = std::sin(TWO_PI * SPEED * t_secs + f * phase_step);
-            frame.channels[f] = (raw + 1.0f) / 2.0f;
+            channels[f] = (raw + 1.0f) / 2.0f;
         }
 
-        tlc.update(frame);
+        tlc.update(channels);
         std::this_thread::sleep_for(std::chrono::milliseconds(SLEEP_TIME_MS));
     }
 }
