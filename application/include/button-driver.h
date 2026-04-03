@@ -8,6 +8,9 @@
 class ButtonDriver {
 public:
     ButtonDriver();
+    
+    void registerSingleButtonCallback(ButtonCallback);
+    void registerAllButtonsCallback(std::function<void(void)>);
 
 private: 
     static constexpr int N_BUTTONS = 4;
@@ -18,6 +21,8 @@ private:
     
     std::optional<ButtonCallback> singleButtonCallback;  
     std::optional<std::function<void(void)>> allButtonsCallback;  
+    
+    bool running = true; 
 };
 
 #endif

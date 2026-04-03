@@ -5,7 +5,7 @@
 ButtonDriver::ButtonDriver() {
     for (size_t i = 0; i < workers.size(); i++) {
         workers[i] = std::thread([&, i] () {
-            while (true) {
+            while (running) {
                 gpio::blockUntilEdge(ButtonDriver::BUTTON_PINS[i], gpiod::line::edge::BOTH);
                 bool val = gpio::getPin(ButtonDriver::BUTTON_PINS[i]);
                 this->buttonStatuses[i] = val;
@@ -27,4 +27,13 @@ ButtonDriver::ButtonDriver() {
             }
         });  
     }
+}
+
+void ButtonDriver::registerAllButtonsCallback(std::function<void(void)> callback) {
+    this->allButtonsCallback = callback;
+}
+
+
+void ButtonDriver::registerSingleButtonCallback(ButtonCallback callback) {
+    this->singleButtonCallback = callback;
 }
