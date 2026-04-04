@@ -8,6 +8,11 @@ _autosave-*
 
 test_scaler
 mode_manager_test
+mapper_test
+chord_manager_test
+flex_test
+button_test
+all_button_test
 
 # macOS
 .DS_Store
