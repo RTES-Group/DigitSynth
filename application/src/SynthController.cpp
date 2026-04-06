@@ -1,9 +1,10 @@
 #include "SynthController.hpp"
 
 void SynthController::onButtonEvent(int index){
-    if (modeManager.current_controlMode == CHORD){
+    if (modeManager.getCurrentMode() == CHORD){
         int previousChord = chordManager.getCurrentChord();
-        int currentChord = chordManager.updateChord(index);
+        chordManager.updateChord(index);
+        int currentChord = chordManager.getCurrentChord();
         if (currentChord != previousChord){ // i.e. we are switching to a new chord
             for (int i = 0; i < 4; i++){
                 midi_message msg;
@@ -28,4 +29,12 @@ void SynthController::onFlexEvent(int index, float value){
 
 void SynthController::onAllButtonsPressed(){
     
+}
+
+ControlMode SynthController::getCurrentMode(){
+    return modeManager.getCurrentMode();
+}
+
+uint8_t SynthController::getCurrentChord(){
+    return chordManager.getCurrentChord();
 }
