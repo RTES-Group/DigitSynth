@@ -21,6 +21,9 @@ void callback(float f) {
     fflush(stdout);
 } 
 
+/**
+ * @returns woohoo
+ */
 int main(int argc, char **argv) {
     (void) argc;
     (void) argv; 
