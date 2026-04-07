@@ -10,9 +10,10 @@
 #include <sys/types.h>
 #include <tuple>
 
-typedef std::optional<uint32_t>     AdcData;
-typedef float                       ExtensionData;
-typedef uint32_t ButtonData;
+typedef std::optional<uint32_t> AdcData;
+typedef float                   ExtensionData;
+typedef float                   Brightness;
+typedef std::optional<bool>     ButtonData;
 
 typedef uint32_t Frequency;
 typedef float    FingerExtension; 
