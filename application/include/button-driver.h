@@ -10,7 +10,9 @@ public:
     ButtonDriver();
     
     void registerSingleButtonCallback(ButtonCallback);
+    void deregisterSingleButtonCallback();
     void registerAllButtonsCallback(std::function<void(void)>);
+    void deregisterAllButtonsCallback();
 
 private: 
     static constexpr int N_BUTTONS = 4;

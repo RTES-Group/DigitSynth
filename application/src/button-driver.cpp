@@ -33,7 +33,15 @@ void ButtonDriver::registerAllButtonsCallback(std::function<void(void)> callback
     this->allButtonsCallback = callback;
 }
 
+void ButtonDriver::deregisterSingleButtonCallback() {
+    this->singleButtonCallback = {};
+}
+
 
 void ButtonDriver::registerSingleButtonCallback(ButtonCallback callback) {
     this->singleButtonCallback = callback;
+}
+
+void ButtonDriver::deregisterAllButtonsCallback() {
+    this->allButtonsCallback = {};
 }
