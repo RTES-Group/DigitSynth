@@ -12,11 +12,11 @@ int main() {
         TLC59711 tlc(DATA_PIN, CLK_PIN);
         tlc.start();
 
-        // std::cout << "Fading in...\n";
-        // pattern_fade(tlc);
+        std::cout << "Fading in...\n";
+        pattern_fade(tlc);
 
-        std::cout << "Ripple running...\n";
-        pattern_ripple(tlc);
+        // std::cout << "Ripple running...\n";
+        // pattern_ripple(tlc);
 
         tlc.stop();
 
