@@ -33,7 +33,7 @@ target_sources(digitsynth_static
         ${SOURCE_DIRECTORY}/TLC59711.cpp
 )
 
-target_link_libraries(digitsynth_static -lwiringPi -lgpiodcxx -lm)
+target_link_libraries(digitsynth_static -lgpiodcxx -lm)
 
 # ── Main executable ──────────────────────────────────────────────────────────
 add_executable(digitsynth)
