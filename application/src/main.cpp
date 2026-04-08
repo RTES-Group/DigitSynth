@@ -56,36 +56,14 @@ int main() {
             std::cout << index << std::endl;
             synth.onButtonEvent(index);
         });
-    
-
-        std::cout << "\nPressing button 1: enter SOURCE_EQ\n";
-        std::cout << "Expected: ripple pattern\n";
-        std::this_thread::sleep_for(4s);
-
-        std::cout << "\nPressing button 0: switch to EQ\n";
-        std::cout << "Expected: ripple stops, fade starts\n";
-        std::this_thread::sleep_for(6s);
-
-        std::cout << "\nPressing button 2: switch to DETUNE\n";
-        std::cout << "Expected: fade stops, ripple starts\n";
-        std::this_thread::sleep_for(4s);
-
-        std::cout << "\nPressing button 0: switch back to EQ\n";
-        std::cout << "Expected: ripple stops, fade starts\n";
-        std::this_thread::sleep_for(6s);
-
-        std::cout << "\nPressing button 3: enter CHORD mode\n";
-        std::cout << "Expected: currently no LED change in your code\n";
-        std::this_thread::sleep_for(3s);
-
-        std::cout << "\nIn CHORD mode, pressing button 1\n";
-        std::cout << "Expected: MIDI chord update only, no LED change yet\n";
-        std::this_thread::sleep_for(2s);
-
-        std::cout << "\nTest complete. Press Ctrl+C to exit early next time.\n";
         
+        bd.registerAllButtonsCallback([&synth] () {
+            std::cout << "all buttons\n";
+            synth.onButtonEvent(2);
+        });
+    
         getchar();
-
+        
         tlc.stop();
     }
     catch (const std::exception& e) {

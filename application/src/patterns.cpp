@@ -69,7 +69,7 @@ void Pattern::stop() {
 void PatternFade::run() {
     static constexpr long STEP_MS  = 40;   // ~25 fps
     static constexpr int  HOLD_MS  = 500;
-    static constexpr int  N_STEPS  = 100;
+    static constexpr int  N_STEPS  = 10;
 
     // timerfd gives us blocking I/O timing — no sleep_for (Ch. 3.4).
     int fd = makeTimerFd(STEP_MS);

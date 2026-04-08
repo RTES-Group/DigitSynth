@@ -7,7 +7,9 @@ SynthController::SynthController(TLC59711& tlc)
 }
 
 void SynthController::onButtonEvent(int index){
-    if (modeManager.getCurrentMode() == CHORD){
+    std::cout << "on button event called " << index << std::endl;
+    // if (modeManager.getCurrentMode() == CHORD){
+    if (false){
         int previousChord = chordManager.getCurrentChord();
         chordManager.updateChord(index);
         int currentChord = chordManager.getCurrentChord();
@@ -147,6 +149,7 @@ midi_message SynthController::getLastCC(){
 }
 
 void SynthController::startRipple() {
+    std::cout << "rippling\n";
     // PatternRipple runs in its own thread (course Ch. 3) and calls
     // tlc.update() internally on each frame — SynthController just
     // starts and stops it as mode changes dictate.
@@ -165,7 +168,7 @@ void SynthController::stopRipple() {
 }
 
 void SynthController::startFade() {
-    stopFade(); // temp: create a new instance every time
+    std::cout << "fade\n";
     if (!_fade) {
         _fade = std::make_unique<PatternFade>(_tlc);
         _fade->start();
