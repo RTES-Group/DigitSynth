@@ -13,6 +13,7 @@
 #include <linux/spi/spi.h>
 #include <linux/spi/spidev.h>
 #include <sys/ioctl.h>
+#include <thread>
 #include <unistd.h>
 #include <ads1115rpi.h>
 
@@ -27,7 +28,7 @@ int main(int argc, char **argv) {
   
     gpio::setupGpio();
     
-    ButtonDriver bd {};
+    ButtonDriver bd;
     
     bd.registerSingleButtonCallback([] (uint32_t idx) {
         std::cout << "single button pressed: " << idx << std::endl;
