@@ -1,25 +1,27 @@
 #include "SynthController.hpp"
 
 SynthController::SynthController(TLC59711& tlc)
-    : _tlc(tlc)
+    : _tlc(tlc), _ripple(tlc), _fade(_tlc)
 {
 
 }
 
 void SynthController::onButtonEvent(int index){
-    if (modeManager.getCurrentMode() == CHORD){
+    std::cout << "on button event called " << index << std::endl;
+    // if (modeManager.getCurrentMode() == CHORD){
+    if (false){
         int previousChord = chordManager.getCurrentChord();
         chordManager.updateChord(index);
         int currentChord = chordManager.getCurrentChord();
         if (currentChord != previousChord){ // i.e. we are switching to a new chord
             for (int i = 0; i < 4; i++){
-		    /*
+                /*
                 midi_message msg;
                 msg.status = 0x90; // Note On message
                 msg.data_1 = chordManager.getNote(i);
                 msg.data_2 = 127;
-		*/
                 //midiDriver.noteOnCallback(msg);
+                */
             }
         }
         else{ //same chord -> do nothing
@@ -28,6 +30,22 @@ void SynthController::onButtonEvent(int index){
     }
     else {
         modeManager.updateMode(index);
+        
+        switch (index) {
+            case 0:
+                stopFade();
+                startRipple();
+                break;
+            case 1:
+                stopRipple();
+                startFade();
+                break;
+            default:
+                break;
+            
+        }
+        
+        /*
         switch(modeManager.getCurrentMode()){
             case EQ:
                 switch (modeManager.getPreviousMode()) {
@@ -86,6 +104,7 @@ void SynthController::onButtonEvent(int index){
             case CHORD:
                 break;
         }
+        }*/
     }
 }
 
@@ -147,34 +166,22 @@ midi_message SynthController::getLastCC(){
 }
 
 void SynthController::startRipple() {
+    std::cout << "rippling\n";
     // PatternRipple runs in its own thread (course Ch. 3) and calls
     // tlc.update() internally on each frame — SynthController just
     // starts and stops it as mode changes dictate.
-    if (!_ripple) {
-        _ripple = std::make_unique<PatternRipple>(_tlc);
-        _ripple->start();
-    }
+    _ripple.start();
 }
 
 void SynthController::stopRipple() {
-    if (_ripple) {
-        // stop() sets _running=false and joins the thread (course Ch. 3.3.3).
-        _ripple->stop();
-        _ripple.reset();
-    }
+    _ripple.stop();
 }
 
 void SynthController::startFade() {
-    stopFade(); // temp: create a new instance every time
-    if (!_fade) {
-        _fade = std::make_unique<PatternFade>(_tlc);
-        _fade->start();
-    }
+    std::cout << "fade\n";
+    _fade.start();
 }
 
 void SynthController::stopFade() {
-    if (_fade) {
-        _fade->stop();
-        _fade.reset();
-    }
+    _fade.stop();
 }
