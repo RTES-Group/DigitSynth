@@ -30,6 +30,7 @@ target_sources(digitsynth
 		${SOURCE_DIRECTORY}/gpio.cpp
 		${SOURCE_DIRECTORY}/flex-sensor.cpp
 		${SOURCE_DIRECTORY}/button-driver.cpp
+		${SOURCE_DIRECTORY}/test_leds_buttons.cpp
     ${SOURCE_DIRECTORY}/patterns.cpp
     ${SOURCE_DIRECTORY}/TLC59711.cpp
 )
