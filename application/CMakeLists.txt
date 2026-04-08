@@ -13,38 +13,41 @@ endif()
 project(DigitSynth)
 
 include(CTest)
-
+include(docs/Docs.cmake)
+add_executable(digitsynth)
+add_library(digitsynth_static)
+target_include_directories(digitsynth PRIVATE include)
+target_include_directories(digitsynth_static PUBLIC include)
 set(SOURCE_DIRECTORY src/)
 
-# ── Static library — shared by main binary and tests ────────────────────────
-add_library(digitsynth_static STATIC)
-
-target_include_directories(digitsynth_static PUBLIC include)
+target_sources(digitsynth
+	PRIVATE
+		# Add source files here to build them
+		${SOURCE_DIRECTORY}/main.cpp
+		${SOURCE_DIRECTORY}/foo.cpp
+		${SOURCE_DIRECTORY}/adc-driver.cpp
+		${SOURCE_DIRECTORY}/button-driver.cpp
+		${SOURCE_DIRECTORY}/gpio.cpp
+		${SOURCE_DIRECTORY}/flex-sensor.cpp
+		${SOURCE_DIRECTORY}/button-driver.cpp
+    ${SOURCE_DIRECTORY}/patterns.cpp
+    ${SOURCE_DIRECTORY}/TLC59711.cpp
+)
 
 target_sources(digitsynth_static
-    PUBLIC
-        ${SOURCE_DIRECTORY}/foo.cpp
-        ${SOURCE_DIRECTORY}/adc-driver.cpp
-        ${SOURCE_DIRECTORY}/button-driver.cpp
-        ${SOURCE_DIRECTORY}/extension-sensor-driver.cpp
-        ${SOURCE_DIRECTORY}/spi.cpp
-        ${SOURCE_DIRECTORY}/gpio.cpp
-        ${SOURCE_DIRECTORY}/patterns.cpp
-        ${SOURCE_DIRECTORY}/TLC59711.cpp
+	PUBLIC
+		# Add source files here to build them
+		${SOURCE_DIRECTORY}/foo.cpp
+		${SOURCE_DIRECTORY}/adc-driver.cpp
+		${SOURCE_DIRECTORY}/button-driver.cpp
+		${SOURCE_DIRECTORY}/gpio.cpp
+    ${SOURCE_DIRECTORY}/patterns.cpp
+    ${SOURCE_DIRECTORY}/TLC59711.cpp
 )
 
-target_link_libraries(digitsynth_static -lgpiodcxx -lm)
+link_directories("/usr/local/lib/")
 
-# ── Main executable ──────────────────────────────────────────────────────────
-add_executable(digitsynth)
-
-target_include_directories(digitsynth PRIVATE include)
-
-target_sources(digitsynth
-    PRIVATE
-        ${SOURCE_DIRECTORY}/main.cpp
-)
-
-target_link_libraries(digitsynth digitsynth_static)
+target_link_libraries(digitsynth -lgpiodcxx libads1115rpi_static.a)
+target_link_libraries(digitsynth_static -lgpiodcxx -lads1115rpi)
 
 add_subdirectory(test)
