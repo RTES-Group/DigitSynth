@@ -1,5 +1,7 @@
 #include "SynthController.hpp"
 #include "TLC59711.h"
+#include "button-driver.h"
+#include "gpio.h"
 
 #include <chrono>
 #include <csignal>
@@ -22,6 +24,7 @@ int main() {
     constexpr int CLK_PIN  = 27;
 
     try {
+        gpio::setupGpio();
         TLC59711 tlc(DATA_PIN, CLK_PIN);
         tlc.start();
 
@@ -39,38 +42,42 @@ int main() {
         // 3 -> CHORD
         //
         // Adjust these if your ModeManager uses different indices.
+        
+        ButtonDriver bd;
+        
+        bd.registerSingleButtonCallback([&synth] (int index) {
+            std::cout << index << std::endl;
+            synth.onButtonEvent(index);
+        });
+    
 
         std::cout << "\nPressing button 1: enter SOURCE_EQ\n";
-        synth.onButtonEvent(1);
         std::cout << "Expected: ripple pattern\n";
         std::this_thread::sleep_for(4s);
 
         std::cout << "\nPressing button 0: switch to EQ\n";
-        synth.onButtonEvent(0);
         std::cout << "Expected: ripple stops, fade starts\n";
         std::this_thread::sleep_for(6s);
 
         std::cout << "\nPressing button 2: switch to DETUNE\n";
-        synth.onButtonEvent(2);
         std::cout << "Expected: fade stops, ripple starts\n";
         std::this_thread::sleep_for(4s);
 
         std::cout << "\nPressing button 0: switch back to EQ\n";
-        synth.onButtonEvent(0);
         std::cout << "Expected: ripple stops, fade starts\n";
         std::this_thread::sleep_for(6s);
 
         std::cout << "\nPressing button 3: enter CHORD mode\n";
-        synth.onButtonEvent(3);
         std::cout << "Expected: currently no LED change in your code\n";
         std::this_thread::sleep_for(3s);
 
         std::cout << "\nIn CHORD mode, pressing button 1\n";
-        synth.onButtonEvent(1);
         std::cout << "Expected: MIDI chord update only, no LED change yet\n";
         std::this_thread::sleep_for(2s);
 
         std::cout << "\nTest complete. Press Ctrl+C to exit early next time.\n";
+        
+        getchar();
 
         tlc.stop();
     }
