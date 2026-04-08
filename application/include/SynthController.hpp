@@ -5,24 +5,41 @@
 #include "paramMapper.hpp"
 #include "MidiScaler.hpp"
 #include "ChordManager.hpp"
+#include "TLC59711.h"
+#include "patterns.h"
 #include <cstdint>
+#include <memory>
 
 class SynthController {
 public:
-    void onButtonEvent(int index); //callback for a single button press
-    void onFlexEvent(int index, float value); //callback for a flex sensor update
-    void onAllButtonsPressed(); //callback for every button pressed at same time
-    
+    // TLC59711 is passed in by reference — SynthController uses it but does
+    // not own it. The caller (main) owns the hardware and its lifetime.
+    explicit SynthController(TLC59711& tlc);
+
+    void onButtonEvent(int index);
+    void onFlexEvent(int index, float value);
+    void onAllButtonsPressed();
+
     ControlMode getCurrentMode(); // for testing
-    uint8_t getCurrentChord(); // for testing
-    midi_message getLastCC(); // for testing
+    uint8_t getCurrentChord();   // for testing
+    midi_message getLastCC();    // for testing
+
 private:
-    ModeManager modeManager;
-    ChordManager chordManager;
-    ParamMapper paramMapper;
-    MidiScaler midiScaler;
+    void startRipple();
+    void stopRipple();
+    void startFade();
+    void stopFade();
     
-    midi_message lastCC; // for testing
+    TLC59711&                    _tlc;
+    std::unique_ptr<PatternRipple> _ripple;  // null when not in chord mode
+    std::unique_ptr<PatternFade> _fade;
+
+    ModeManager  modeManager;
+    ChordManager chordManager;
+    ParamMapper  paramMapper;
+    MidiScaler   midiScaler;
+
+    midi_message lastCC;
 };
 
 #endif /* SynthController_hpp */
