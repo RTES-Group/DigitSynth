@@ -26,6 +26,7 @@ jobs:
     - name: ads-1115-driver
       run: |
         git clone https://github.com/berndporr/rpi_ads1115.git
+        cmake .
         make
         sudo make install
       
