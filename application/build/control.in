@@ -1,8 +1,7 @@
-Package: test-deb
+Package: digitsynth
 Version: 1.0-1
 Section: embedded
 Priority: optional
-Architecture: all 
+Architecture: arm64
 Maintainer: DigitSynth
-Description: This is a test application
- for packaging
+Description: Release binary for DigitSynth. 
