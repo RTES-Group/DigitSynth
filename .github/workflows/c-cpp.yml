@@ -9,14 +9,10 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
 
     steps:
     - uses: actions/checkout@v4
-    - uses: uraimo/run-on-arch-action@v3
-      with: 
-        arch: aarch64
-        distro: ubuntu-24.04
 
     - name: libgpiod
       run: |
