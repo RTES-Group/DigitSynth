@@ -37,13 +37,10 @@ jobs:
         cd application/
         make
 
-  archive:
-    runs-on: ubuntu-latest
-
-    steps:
     - name: archive-artifact
       uses: actions/upload-artifact@v4
       with:
         name: digitsynth-binary
         path: ./application/build/digitsynth
-    
+ 
+   
