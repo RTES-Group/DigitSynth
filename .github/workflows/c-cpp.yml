@@ -1,0 +1,46 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "ci-cd" ]
+  pull_request:
+    branches: [ "ci-cd" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: libgpiod
+      run: 
+        git clone https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git
+        cd libgpiod
+        ./configure --enable-cxx-bindings
+        make
+        make install
+    
+    - name: ads-1115-driver
+      run: 
+        git clone https://github.com/berndporr/rpi_ads1115.git
+        make
+        make install
+      
+    
+    - name: make
+      run: 
+        cd application/
+        make
+
+  archive:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: archive-artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: digitsynth-binary
+        path: ./application/build/digitsynth
+    
