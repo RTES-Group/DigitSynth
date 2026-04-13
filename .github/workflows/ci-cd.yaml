@@ -42,11 +42,7 @@ jobs:
         cd application/ 
         make test 
         cat build/Testing/Temporary/LastTest.log
-      uses: actions/upload-artifact@v6
-      with: 
-        name: test-log
-        path: application/build/Testing/Temporary/LastTest.log
-
+      
     - name: package
       run: | 
         cd application/
