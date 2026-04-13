@@ -46,6 +46,3 @@ void MidiDriver::sendMessage(const midi_message& msg) {
     midiOut_->sendMessage(&bytes);
 }
 
-void MidiDriver::midiCallback(const midi_message& msg) {
-    sendMessage(msg);
-}

@@ -20,8 +20,6 @@ class MidiDriver {
         void openPort(unsigned int portIndex);
 
         void sendMessage(const midi_message& msg);
-        void noteOnCallback(const midi_message& msg);
-        void ccCallback(const midi_message& msg);
 
     private:
         RtMidiOut* midiOut_;
