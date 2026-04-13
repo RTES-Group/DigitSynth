@@ -27,7 +27,7 @@ int main() {
         midi.openPort(0);
 
         // --- Synth setup ---
-        TLC59711 tlc;  // construct as required for your setup
+        TLC59711 tlc(17, 27);
         SynthController synth(tlc);
 
         // Register callback: synth → MIDI driver
