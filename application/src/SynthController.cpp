@@ -1,7 +1,7 @@
 #include "SynthController.hpp"
 
 SynthController::SynthController(TLC59711& tlc)
-    : _tlc(tlc), _ripple(tlc), _fade(_tlc)
+: _tlc(tlc), _ripple(_tlc), _fade(_tlc)
 {
 
 }
@@ -122,7 +122,7 @@ void SynthController::onFlexEvent(std::array<ExtensionData, 4>& values){
         }
         midi_message msg;
         msg.status = 0xB0; // Control Change
-        msg.data_1 = cc_number;
+        msg.data_1 = cc_num;
         msg.data_2 = scaled_value;
         lastCC[i] = msg; // for testing
         //midiDriver.ccCalback(msg);
