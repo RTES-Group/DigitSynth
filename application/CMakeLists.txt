@@ -1,16 +1,14 @@
 cmake_minimum_required(VERSION 3.23)
 
-# === Compiler options ===
 add_compile_options(-Wall -Wextra -Wpedantic -Werror)
 if (NOT ${RELEASE} EQUAL 0)
     add_compile_options(-O3)
-	message(STATUS "Building in release mode ${RELEASE}\n")
+    message(STATUS "Building in release mode ${RELEASE}\n")
 else()
     message(STATUS "Building in debug mode ${RELEASE}\n")
-	add_compile_options(-O0 -ggdb)
-   set(CMAKE_BUILD_TYPE Debug)
+    add_compile_options(-O0 -ggdb)
+    set(CMAKE_BUILD_TYPE Debug)
 endif()
-
 
 project(DigitSynth)
 
@@ -29,11 +27,12 @@ target_sources(digitsynth
 		${SOURCE_DIRECTORY}/foo.cpp
 		${SOURCE_DIRECTORY}/adc-driver.cpp
 		${SOURCE_DIRECTORY}/button-driver.cpp
-		${SOURCE_DIRECTORY}/extension-sensor-driver.cpp
-		${SOURCE_DIRECTORY}/spi.cpp
 		${SOURCE_DIRECTORY}/gpio.cpp
 		${SOURCE_DIRECTORY}/flex-sensor.cpp
 		${SOURCE_DIRECTORY}/button-driver.cpp
+		${SOURCE_DIRECTORY}/midi-driver.cpp
+    ${SOURCE_DIRECTORY}/patterns.cpp
+    ${SOURCE_DIRECTORY}/TLC59711.cpp
 )
 
 target_sources(digitsynth_static
@@ -42,14 +41,26 @@ target_sources(digitsynth_static
 		${SOURCE_DIRECTORY}/foo.cpp
 		${SOURCE_DIRECTORY}/adc-driver.cpp
 		${SOURCE_DIRECTORY}/button-driver.cpp
-		${SOURCE_DIRECTORY}/extension-sensor-driver.cpp
-		${SOURCE_DIRECTORY}/spi.cpp
 		${SOURCE_DIRECTORY}/gpio.cpp
+		${SOURCE_DIRECTORY}/midi-driver.cpp
+    ${SOURCE_DIRECTORY}/patterns.cpp
+    ${SOURCE_DIRECTORY}/TLC59711.cpp
 )
 
 link_directories("/usr/local/lib/")
 
-target_link_libraries(digitsynth -lgpiodcxx libads1115rpi_static.a)
-target_link_libraries(digitsynth_static -lgpiodcxx -lads1115rpi)
+target_link_libraries(digitsynth -lgpiodcxx libads1115rpi_static.a rtmidi)
+target_link_libraries(digitsynth_static -lgpiodcxx -lads1115rpi rtmidi)
+
+add_executable(midi_test
+	tools/midi_test.cpp
+	src/midi-driver.cpp
+)
+
+target_include_directories(midi_test PRIVATE include)
+
+target_link_libraries(midi_test
+	rtmidi
+)
 
 add_subdirectory(test)
