@@ -5,7 +5,7 @@
 #include <thread>
 
 ButtonDriver::ButtonDriver() {
-    for (size_t i = 0; i < workers.size(); i++) {
+    for (ButtonIndex i = 0; i < (ButtonIndex) workers.size(); i++) {
         workers[i] = std::thread([&, i] () {
             while (running) {
                 auto edge = gpio::blockUntilEdge(ButtonDriver::BUTTON_PINS[i], gpiod::line::edge::BOTH);
@@ -31,7 +31,7 @@ ButtonDriver::ButtonDriver() {
     }
 }
 
-void ButtonDriver::registerAllButtonsCallback(std::function<void(void)> callback) {
+void ButtonDriver::registerAllButtonsCallback(AllButtonsCallback callback) {
     this->allButtonsCallback = callback;
 }
 
@@ -40,7 +40,7 @@ void ButtonDriver::deregisterSingleButtonCallback() {
 }
 
 
-void ButtonDriver::registerSingleButtonCallback(ButtonCallback callback) {
+void ButtonDriver::registerSingleButtonCallback(SingleButtonCallback callback) {
     this->singleButtonCallback = callback;
 }
 
