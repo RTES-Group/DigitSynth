@@ -37,10 +37,16 @@ jobs:
         cd application/
         make
 
+    - name: test
+      run: | 
+        cd application/ 
+        make test 
+
     - name: package
       run: | 
         cd application/
         make deb
+
 
     - name: archive-binary
       uses: actions/upload-artifact@v6
