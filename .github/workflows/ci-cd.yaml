@@ -38,11 +38,11 @@ jobs:
         make
 
     - name: test
-      uses: actions/upload-artifact@v6
       run: | 
         cd application/ 
         make test 
         cat build/Testing/Temporary/LastTest.log
+      uses: actions/upload-artifact@v6
       with: 
         name: test-log
         path: application/build/Testing/Temporary/LastTest.log
