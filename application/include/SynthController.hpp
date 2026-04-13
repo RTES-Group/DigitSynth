@@ -9,6 +9,7 @@
 #include "patterns.h"
 #include <cstdint>
 #include <memory>
+#include "types.h"
 
 class SynthController {
 public:
@@ -17,7 +18,7 @@ public:
     explicit SynthController(TLC59711& tlc);
 
     void onButtonEvent(int index);
-    void onFlexEvent(int index, float value);
+    void onFlexEvent(std::array<ExtensionData, 4>& values);
     void onAllButtonsPressed();
 
     ControlMode getCurrentMode(); // for testing

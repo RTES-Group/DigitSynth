@@ -108,23 +108,25 @@ void SynthController::onButtonEvent(int index){
     }
 }
 
-void SynthController::onFlexEvent(int index, float value){
-    uint8_t scaled_value = midiScaler.scaleValue(value);
+void SynthController::onFlexEvent(std::array<ExtensionData, 4>& values){
     ControlMode currentMode = modeManager.getCurrentMode();
     ControlMode prevMode = modeManager.getPreviousMode();
-    uint8_t cc_number;
-    if (currentMode == CHORD){
-        cc_number = paramMapper.getCC(index, prevMode);
+    for (int i = 0; i < 4; i++){
+        uint8_t scaled_value = midiScaler.scaleValue(values[i]);
+        uint8_t cc_num;
+        if (currentMode == CHORD){
+            cc_num = paramMapper.getCC(index, prevMode);
+        }
+        else {
+            cc_num = paramMapper.getCC(index, currentMode);
+        }
+        midi_message msg;
+        msg.status = 0xB0; // Control Change
+        msg.data_1 = cc_number;
+        msg.data_2 = scaled_value;
+        lastCC = msg; // for testing
+        //midiDriver.ccCalback(msg);
     }
-    else {
-        cc_number = paramMapper.getCC(index, currentMode);
-    }
-    midi_message msg;
-    msg.status = 0xB0; // Control Change
-    msg.data_1 = cc_number;
-    msg.data_2 = scaled_value;
-    lastCC = msg; // for testing
-    //midiDriver.ccCalback(msg);
 }
 
 void SynthController::onAllButtonsPressed(){
