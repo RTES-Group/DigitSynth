@@ -5,7 +5,7 @@
 #include <thread>
 
 ButtonDriver::ButtonDriver() {
-    for (size_t i = 0; i < workers.size(); i++) {
+    for (ButtonIndex i = 0; i < (ButtonIndex) workers.size(); i++) {
         workers[i] = std::thread([&, i] () {
             while (running) {
                 auto edge = gpio::blockUntilEdge(ButtonDriver::BUTTON_PINS[i], gpiod::line::edge::BOTH);
