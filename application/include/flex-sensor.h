@@ -8,15 +8,31 @@
 #include "adc-driver.h"
 #include "types.h"
 
+/**
+ * When `begin()` is called, this class will sample each channel of the 
+ * ADC in turn and call the registered callback once every channel has been
+ * sampled. 
+ */
 class FlexSensor {
 public:
     
     FlexSensor();
 
+    /**
+     * Start sampling the sensors.
+     */
     void begin();
-    void registerCallback(ExtensionCallback);
+    
+    /**
+     * Register the function that will be called when data is ready. 
+     * @param callback --- the callback to be registered. 
+     */
+    void registerCallback(ExtensionCallback callback);
     
 private: 
+    /**
+     * Will call the callback if all ADC channels have been sampled.
+     */
     void updateIfNeeded();
 
     const float V_MAX = 5.0;

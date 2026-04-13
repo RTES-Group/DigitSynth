@@ -8,7 +8,6 @@
 #include <optional>
 
 #include <sys/types.h>
-#include <tuple>
 
 typedef std::optional<uint32_t> AdcData;
 typedef float                   ExtensionData;
@@ -16,7 +15,6 @@ typedef float                   Brightness;
 typedef std::optional<bool>     ButtonData;
 
 typedef uint32_t Frequency;
-typedef float    FingerExtension; 
 
 typedef std::function<void(AdcData)>       AdcCallback;
 typedef std::function<void(std::array<ExtensionData, 4>)> ExtensionCallback;
