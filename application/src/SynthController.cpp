@@ -31,7 +31,9 @@ SynthController::SynthController(TLC59711& tlc)
             
             switch (modeManager.getCurrentMode()) {
                 case EQ:
-                    // we don't want to do any LED control here, spectral response in flex handler instead
+                    if (modeManager.getActiveLedPattern() == SOURCE_EQ) stopFade();
+                    else if (modeManager.getActiveLedPattern() == DETUNE) stopRipple();
+                    // spectral update handled by flex callback
                     break;
                 case SOURCE_EQ:
                     // LEDs should fade
@@ -103,22 +105,17 @@ SynthController::SynthController(TLC59711& tlc)
         */
         
         ControlMode currentMode = modeManager.getCurrentMode();
-        ControlMode prevMode = modeManager.getPreviousMode();
-        
-        if (currentMode == EQ){ //EQ mode: spectral LED response
-            ControlMode ledPattern = modeManager.getActiveLedPattern();
-            if (ledPattern == SOURCE_EQ){
-                stopFade();
-            }
-            else if (ledPattern == DETUNE){
-                stopRipple();
-            }
-            TLC59711::Chanels c{};
-            c[0] = 1; // first and last LEDs always on here
+        ControlMode effectiveMode = (currentMode == CHORD)
+            ? modeManager.getActiveLedPattern()
+            : currentMode;
+
+        if (effectiveMode == EQ) {
+            TLC59711::Channels c{};   // fix the typo here too
+            c[0] = 1;
             c[9] = 1;
-            for (int i = 0; i < 4; i++){
-                c[i+1] = values[i]; // LEDs 2-5
-                c[8-i] = values[i]; // LEDs 6-9
+            for (int i = 0; i < 4; i++) {
+                c[i+1] = values[i];
+                c[8-i] = values[i];
             }
             this->_tlc.update(c);
         }
