@@ -1,4 +1,5 @@
 #include "SynthController.hpp"
+#include "TLC59711.h"
 
 SynthController::SynthController(TLC59711& tlc)
     : _tlc(tlc), _ripple(tlc), _fade(_tlc)
@@ -73,6 +74,19 @@ SynthController::SynthController(TLC59711& tlc)
     );
     
     this->flexSensor.registerCallback([this] (std::array<ExtensionData, 4> values){
+        
+        for (auto d : values) {
+            std::cout << d << " ";
+        }
+        std::cout << std::endl;
+        
+        TLC59711::Channels c{};
+        for (int i = 0; i < 4; i++) {
+            c[i] = values[i];
+        }
+        this->_tlc.update(c);
+        
+        /* 
         ControlMode currentMode = modeManager.getCurrentMode();
         ControlMode prevMode = modeManager.getPreviousMode();
         for (int i = 0; i < 4; i++){
@@ -93,8 +107,10 @@ SynthController::SynthController(TLC59711& tlc)
                 midiCallback.value()(msg);
             }
         }
+        */
     });
 
+    this->flexSensor.begin();
 }
 
 ControlMode SynthController::getCurrentMode(){

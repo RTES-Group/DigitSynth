@@ -5,18 +5,23 @@
 #include "flex-sensor.h"
 #include "gpio.h"
 #include "midi-driver.hpp"
+#include "patterns.h"
+#include "types.h"
 #include <iostream>
 
 int main() {
     gpio::setupGpio();
     
     TLC59711 tlc(17, 27);
+    tlc.start();
     SynthController synth(tlc);
     MidiDriver md; 
     
     
+    
     getchar();
     
+    std::cout <<"stop\n";
     
     
     
