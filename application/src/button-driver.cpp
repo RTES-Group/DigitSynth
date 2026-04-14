@@ -33,7 +33,7 @@ ButtonDriver::ButtonDriver() {
 
 ButtonDriver::~ButtonDriver() {
     this->running = false;
-    gpio::cancelLineRequest();
+    gpio::cancelLineRequests();
     for (std::thread &t: this->workers) {
         if (t.joinable()) { t.join(); }
     }

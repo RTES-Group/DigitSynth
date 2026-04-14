@@ -9,7 +9,7 @@ int main() {
     ButtonDriver bd;
     
     bd.registerSingleButtonCallback([] (ButtonIndex index) {
-        std::cout << index;
+        std::cout << index << std::endl;
     });
     
     getchar();

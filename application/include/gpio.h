@@ -36,7 +36,7 @@ namespace gpio {
      */
     gpiod::edge_event::event_type blockUntilEdge(int pin, gpiod::line::edge edge);
     
-    void cancelLineRequest();
+    void cancelLineRequests();
 }
 
 #endif

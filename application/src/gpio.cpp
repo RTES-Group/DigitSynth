@@ -6,12 +6,13 @@
 #include <iostream>
 #include <optional>
 
+#define BLOCK_TIMEOUT_MS    (500)
+
 static gpiod::chip *chip;
 
 static std::optional<GpioCallback> callback = {};
 
-static gpiod::line_request *rq; 
-static bool r; 
+static bool lineRequestsRunning = false; 
 
 void gpio::setupGpio() {
     chip = new gpiod::chip("/dev/gpiochip0");
@@ -19,9 +20,12 @@ void gpio::setupGpio() {
         std::cerr << "Could not open GPIO device\n";
         exit(-1);
     }
+    
+    lineRequestsRunning = true;
 }
 
 void gpio::teardownGpio() {
+    lineRequestsRunning = false;
     chip->close();
 }
 
@@ -74,29 +78,22 @@ gpiod::edge_event::event_type gpio::blockUntilEdge(int pin, gpiod::line::edge ed
         .set_consumer("digitsynth callback")
         .set_line_config(line_config);
     
-    rq = new gpiod::line_request(builder.do_request());
+    auto rq = gpiod::line_request(builder.do_request());
+    bool r = false;
     
-    r = false;
-    
-    while (!r) {
-        r = rq->wait_edge_events(std::chrono::milliseconds(5000));
+    while (!r && lineRequestsRunning) {
+        r = rq.wait_edge_events(std::chrono::milliseconds(BLOCK_TIMEOUT_MS));
     }
     
-    if (rq == nullptr) {
-        return gpiod::edge_event::event_type::FALLING_EDGE;
-    }
+    if (!lineRequestsRunning) { return gpiod::edge_event::event_type::FALLING_EDGE; }
     
     gpiod::edge_event_buffer buf; 
-    rq->read_edge_events(buf, 1);
+    rq.read_edge_events(buf, 1);
     auto e = buf.get_event(0);
     
-    delete rq;
-    rq = nullptr;
     return e.type();
 }
 
-void gpio::cancelLineRequest() {
-    r = true;
-    delete rq; 
-    rq = nullptr;
+void gpio::cancelLineRequests() {
+    lineRequestsRunning = false;
 }
