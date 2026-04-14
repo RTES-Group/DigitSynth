@@ -27,4 +27,11 @@ void ModeManager::updateMode(int index){
             current_controlMode = CHORD;
             break;
     }
+    if (current_controlMode != CHORD) {
+        active_led_pattern = current_controlMode;
+    }
+}
+
+ControlMode ModeManager::getActiveLedPattern(){
+    return active_led_pattern;
 }
