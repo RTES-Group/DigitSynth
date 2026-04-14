@@ -113,6 +113,10 @@ SynthController::SynthController(TLC59711& tlc)
     this->flexSensor.begin();
 }
 
+SynthController::~SynthController() {
+    std::cout << this->flexSensor.getNSamples() << std::endl;
+}
+
 ControlMode SynthController::getCurrentMode(){
     return modeManager.getCurrentMode();
 }

@@ -13,8 +13,12 @@ void FlexSensor::updateIfNeeded() {
     data[2] = this->values[ADS1115settings::AIN2];
     data[3] = this->values[ADS1115settings::AIN3];
     
-    std::this_thread::sleep_for(std::chrono::milliseconds(50));
+    this->n_samples++;
     this->callback.value()(data);
+}
+
+uint64_t FlexSensor::getNSamples() {
+    return this->n_samples;
 }
 
 FlexSensor::FlexSensor() {

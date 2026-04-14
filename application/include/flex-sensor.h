@@ -29,6 +29,8 @@ public:
      */
     void registerCallback(ExtensionCallback callback);
     
+    uint64_t getNSamples();
+    
 private: 
     /**
      * Will call the callback if all ADC channels have been sampled.
@@ -48,6 +50,7 @@ private:
     AdcDriver adc; 
     ADS1115settings::Input currentChannel = ADS1115settings::AIN0;
     
+    uint64_t n_samples;
 };
 
 #endif
