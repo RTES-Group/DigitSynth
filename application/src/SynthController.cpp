@@ -103,7 +103,6 @@ SynthController::SynthController(TLC59711& tlc)
         */
         
         ControlMode currentMode = modeManager.getCurrentMode();
-        ControlMode prevMode = modeManager.getPreviousMode();
         
         if (currentMode == EQ){ //EQ mode: spectral LED response
             ControlMode ledPattern = modeManager.getActiveLedPattern();
@@ -113,7 +112,7 @@ SynthController::SynthController(TLC59711& tlc)
             else if (ledPattern == DETUNE){
                 stopRipple();
             }
-            TLC59711::Chanels c{};
+            TLC59711::Channels c{};
             c[0] = 1; // first and last LEDs always on here
             c[9] = 1;
             for (int i = 0; i < 4; i++){
