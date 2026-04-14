@@ -9,7 +9,10 @@ ButtonDriver::ButtonDriver() {
         workers[i] = std::thread([&, i] () {
             while (this->running) {
                 auto edge = gpio::blockUntilEdge(ButtonDriver::BUTTON_PINS[i], gpiod::line::edge::BOTH);
-                bool val = edge == gpiod::edge_event::event_type::RISING_EDGE;
+                
+                if (!edge.has_value()) { continue; }
+                
+                bool val = edge.value() == gpiod::edge_event::event_type::RISING_EDGE;
                 this->buttonStatuses[i] = val;
                 
                 

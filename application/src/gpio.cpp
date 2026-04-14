@@ -65,7 +65,7 @@ bool gpio::getPin(int pin) {
     return value;
 }
 
-gpiod::edge_event::event_type gpio::blockUntilEdge(int pin, gpiod::line::edge edge) {
+std::optional<gpiod::edge_event::event_type> gpio::blockUntilEdge(int pin, gpiod::line::edge edge) {
     if (chip == nullptr) {
         std::cerr << "GPIO chip not set up\n";
         exit(-1);
@@ -85,7 +85,7 @@ gpiod::edge_event::event_type gpio::blockUntilEdge(int pin, gpiod::line::edge ed
         r = rq.wait_edge_events(std::chrono::milliseconds(BLOCK_TIMEOUT_MS));
     }
     
-    if (!lineRequestsRunning) { return gpiod::edge_event::event_type::FALLING_EDGE; }
+    if (!lineRequestsRunning) { return {}; }
     
     gpiod::edge_event_buffer buf; 
     rq.read_edge_events(buf, 1);
