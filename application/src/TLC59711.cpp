@@ -40,8 +40,11 @@ void TLC59711::stop() {
 }
 
 void TLC59711::update(const Channels& channels) {
+    if (_dirty) { return; }
+    
     {
         std::lock_guard<std::mutex> lock(_mutex);
+        std::cout << "queueing...\n";
         _pending = channels;
         _dirty   = true;
     }
@@ -80,7 +83,6 @@ void TLC59711::worker() {
             if (!_running) break;
 
             channels = _pending;
-            _dirty   = false;
         }
         // Lock is released here — calling thread is free immediately.
 
@@ -92,6 +94,7 @@ void TLC59711::worker() {
         buf.reserve(static_cast<size_t>(_num_drivers) * 28);
         buildPacket(buf);
         shiftOut(buf, request);
+        _dirty   = false;
     }
 
     // Drive both pins low before releasing.

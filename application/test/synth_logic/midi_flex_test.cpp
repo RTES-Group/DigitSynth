@@ -38,10 +38,10 @@ int main() {
         );
 
         // --- Test flex input ---
-        std::array<ExtensionData, 4> flex_data = {0.2, 0.5, 0.8, 1.0};
+        // std::array<ExtensionData, 4> flex_data = {0.2, 0.5, 0.8, 1.0};
 
         std::cout << "Sending flex event (should produce CC messages)...\n";
-        synth.onFlexEvent(flex_data);
+        // synth.onFlexEvent(flex_data);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(500));
 

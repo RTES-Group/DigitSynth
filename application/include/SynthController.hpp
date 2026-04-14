@@ -2,6 +2,7 @@
 #define SynthController_hpp
 
 #include "ModeManager.hpp"
+#include "button-driver.h"
 #include "paramMapper.hpp"
 #include "MidiScaler.hpp"
 #include "ChordManager.hpp"
@@ -10,16 +11,14 @@
 #include "types.h"
 #include "TLC59711.h"
 #include "patterns.h"
+#include "flex-sensor.h"
 
 class SynthController {
 public:
     // TLC59711 is passed in by reference — SynthController uses it but does
     // not own it. The caller (main) owns the hardware and its lifetime.
     explicit SynthController(TLC59711& tlc);
-
-    void onButtonEvent(int index);
-    void onFlexEvent(std::array<ExtensionData, 4>& values);
-    void onAllButtonsPressed();
+    ~SynthController();
 
     ControlMode getCurrentMode(); // for testing
     uint8_t getCurrentChord();   // for testing
@@ -45,6 +44,9 @@ private:
     std::optional<MidiCallback> midiCallback = {};
 
     midi_message lastCC[4];
+    
+    ButtonDriver buttonDriver;
+    FlexSensor   flexSensor;
 };
 
 #endif /* SynthController_hpp */
