@@ -10,7 +10,7 @@
 -  Hardware controls for intuitive parameter adjustment
 -  MIDI CC output with adjustable filter parameters
 -  Responsive LEDs that react in real-time to parameter changes
--  -  Open source and fully reproducible
+-  Open source and fully reproducible
 ---
 ## Hardware Requirements
  
