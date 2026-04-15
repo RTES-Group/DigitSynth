@@ -38,9 +38,7 @@ Wiring Diagram:
 ## Software Requirements
 
 ### Toolchain
-- **Language:** C++17
-- **Compiler:** G++ (compiled natively on Raspberry Pi)
-- **IDE:** Visual Studio Code with the Remote SSH extension
+Our build system is CMake, but we provide a simple top-level Makefile to make things easy. Feel free to run the `cmake` commands manually if you are so inclined. 
 
 ### 1. Clone the Repository
  
@@ -57,6 +55,8 @@ cd DigitSynth
 |---|---|---|
 | IIR Filter Library | Digital IIR filter design and processing | [berndporr/iir1](https://github.com/berndporr/iir1) |
 | RtMidi | Real-time MIDI input/output | [thestk/rtmidi](https://github.com/thestk/rtmidi) |
+| ADS1115 API | Flex sensor measurement | [berndporr/rpi_ads1115](github.com/berndporr/rpi_ads1115) |
+| libgpiod | GPIO management | [ligpiod](https://libgpiod.readthedocs.io/en/latest/building.html) | 
 
 **IIR Library:**
 ```bash
@@ -83,6 +83,17 @@ cmake .
 make
 sudo make install
 ```
+
+**libpgiod** 
+```bash 
+curl -S https://mirrors.edge.kernel.org/pub/software/libs/libgpiod/libgpiod-2.2.tar.gz -o libgpiod.tar.gz
+tar -xf libgpiod.tar.gz
+cd libgpiod-2.2/
+./configure --enable-bindings-cxx
+make
+sudo make install
+```
+
 ### 3. Enable SPI on the Raspberry Pi:
 SPI must be enabled before the project will run:
 
@@ -95,10 +106,28 @@ gpio i2cd
 ### 4. Build the project:
 
 ```bash
-mkdir build && cd build
-cmake ..
 make
 ```
+
+### 5. Run:
+```bash
+build/digitsynth
+```
+
+---
+
+## Unit tests
+
+To run unit tests: 
+```bash 
+make test
+```
+
+---
+
+# Contributing
+
+See the issues tab for a list of potential contributions. In particular we would welcome expanding support for other synths. 
 
 ---
 
