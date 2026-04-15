@@ -1,58 +1,17 @@
 #include "paramMapper.hpp"
 
-uint8_t ParamMapper::getCC(int index, ControlMode current_mode){
-    uint8_t cc_num = 0;
-    switch(current_mode){
-        case EQ:
-            switch(index){
-                case 0:
-                    cc_num = 19;
-                    break;
-                case 1:
-                    cc_num = 20;
-                    break;
-                case 2:
-                    cc_num = 21;
-                    break;
-                case 3:
-                    cc_num = 22;
-                    break;
-            }
+uint8_t ParamMapper::getCC(int index){ // for flex sensors
+    switch(index){
+        case 0: // filter cutoff
+            return 74;
             break;
-        case SOURCE_EQ:
-            switch(index){
-                case 0:
-                    cc_num = 23;
-                    break;
-                case 1:
-                    cc_num = 24;
-                    break;
-                case 2:
-                    cc_num = 25;
-                    break;
-                case 3:
-                    cc_num = 26;
-                    break;
-            }
+        case 1: // LFO rate
+            return 16;
             break;
-        case DETUNE:
-            switch(index){
-                case 0:
-                    cc_num = 27;
-                    break;
-                case 1:
-                    cc_num = 28;
-                    break;
-                case 2:
-                    cc_num = 29;
-                    break;
-                case 3:
-                    cc_num = 30;
-                    break;
-            }
+        case 2: // LFO depth (depends on button 2 state! This needs to be stored somewhere)
+            return 18; // might be wrong (this is for LFO filter depth)
             break;
-	 case CHORD:
-	    break;
+        default:
+            return 0;
     }
-    return cc_num;
 }

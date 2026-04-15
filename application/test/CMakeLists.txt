@@ -37,3 +37,9 @@ add_executable(test_chord_manager synth_logic/chord_manager_test.cpp)
 target_include_directories(test_chord_manager PRIVATE ${CMAKE_SOURCE_DIR}/include)
 target_link_libraries(test_chord_manager digitsynth_static)
 add_test(NAME TestChordManager COMMAND test_chord_manager)
+
+# test_message_builder
+add_executable(test_message_builder synth_logic/message_builder_test.cpp)
+target_include_directories(test_message_builder PRIVATE ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(test_message_builder digitsynth_static)
+add_test(NAME TestMessageBuilder COMMAND test_message_builder)
