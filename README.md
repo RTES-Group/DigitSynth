@@ -1,6 +1,6 @@
 # DigitSynth
 
-> A real-time audio effects processor built on Raspberry Pi — apply filters and effects to live audio using MIDI control messages.
+> A real-time wearable audio effects processor built on Raspberry Pi — apply filters and effects to live audio using MIDI control messages with responsive LEDs.
 
 ---
 ##  Features
