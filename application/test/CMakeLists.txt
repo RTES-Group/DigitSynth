@@ -25,3 +25,8 @@ add_test(NAME TestTLC COMMAND test_TLC)
 # target_link_libraries(test_midi_flex digitsynth_static)
 # add_test(NAME TestMidiFlex COMMAND test_midi_flex)
 #
+
+# test_mode_manager
+add_executable(test_mode_manager synth_logic/mode_manager_test.cpp ../application/src/ModeManager.cpp)
+target_include_directories(test_mode_manager PRIVATE ../application/include ${CMAKE_SOURCE_DIR}/include)
+add_test(NAME TestModeManager COMMAND test_mode_manager)
