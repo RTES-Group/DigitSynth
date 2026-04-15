@@ -58,40 +58,9 @@ cd DigitSynth
 | ADS1115 API | Flex sensor measurement | [berndporr/rpi_ads1115](github.com/berndporr/rpi_ads1115) |
 | libgpiod | GPIO management | [ligpiod](https://libgpiod.readthedocs.io/en/latest/building.html) | 
 
-**IIR Library:**
-```bash
-git clone https://github.com/berndporr/iir1.git
-cd iir1
-cmake .
-make
-sudo make install
-```
-**RtMidi:**
-```bash
-git clone https://github.com/thestk/rtmidi.git
-cd rtmidi
-cmake .
-make
-sudo make install
-```
-
-**ads1115rpi:**
-```bash
-git clone https://github.com/wryan67/ads1115_rpi_lib
-cd ads1115rpi
-cmake .
-make
-sudo make install
-```
-
-**libpgiod** 
+Simply run the `install-deps.sh` script:
 ```bash 
-curl -S https://mirrors.edge.kernel.org/pub/software/libs/libgpiod/libgpiod-2.2.tar.gz -o libgpiod.tar.gz
-tar -xf libgpiod.tar.gz
-cd libgpiod-2.2/
-./configure --enable-bindings-cxx
-make
-sudo make install
+./install-deps.sh
 ```
 
 ### 3. Enable SPI on the Raspberry Pi:
