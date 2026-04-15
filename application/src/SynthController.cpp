@@ -81,18 +81,6 @@ SynthController::SynthController(TLC59711& tlc)
     );
     
     this->flexSensor.registerCallback([this] (std::array<ExtensionData, 4> values){
-        /*
-        for (auto d : values) {
-            std::cout << d << " ";
-        }
-        std::cout << std::endl;
-        
-        TLC59711::Channels c{};
-        for (int i = 0; i < 4; i++) {
-            c[i] = values[i];
-        }
-        this->_tlc.update(c);
-        */
         
         ControlMode currentMode = modeManager.getCurrentMode();
         ControlMode effectiveMode = (currentMode == CHORD)
@@ -109,7 +97,7 @@ SynthController::SynthController(TLC59711& tlc)
             }
             this->_tlc.update(c);
         }
-        /*
+        
         for (int i = 0; i < 4; i++){
             uint8_t scaled_value = midiScaler.scaleValue(values[i]);
             uint8_t cc_num;
@@ -124,11 +112,13 @@ SynthController::SynthController(TLC59711& tlc)
             msg.data_1 = cc_num;
             msg.data_2 = scaled_value;
             lastCC[i] = msg; // for testing
+            /*
             if (midiCallback.has_value()) {
                 midiCallback.value()(msg);
             }
+             */
         }
-        */
+        
     });
 
     this->flexSensor.begin();
