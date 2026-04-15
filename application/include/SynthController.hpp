@@ -3,7 +3,7 @@
 
 #include "ModeManager.hpp"
 #include "button-driver.h"
-#include "paramMapper.hpp"
+#include "MessageBuilder.hpp"
 #include "MidiScaler.hpp"
 #include "ChordManager.hpp"
 #include <cstdint>
@@ -38,7 +38,7 @@ private:
 
     ModeManager  modeManager;
     ChordManager chordManager;
-    ParamMapper  paramMapper;
+    MessageBuilder messageBuilder;
     MidiScaler   midiScaler;
     
     std::optional<MidiCallback> midiCallback = {};

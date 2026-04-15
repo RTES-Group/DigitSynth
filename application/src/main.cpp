@@ -10,20 +10,5 @@
 #include <iostream>
 
 int main() {
-    gpio::setupGpio();
-    
-    TLC59711 tlc(17, 27);
-    tlc.start();
-    SynthController synth(tlc);
-    MidiDriver md; 
-    
-    
-    
-    getchar();
-    
-    std::cout <<"stop\n";
-    
-    
-    
-    return 0;
+    return(0);
 }

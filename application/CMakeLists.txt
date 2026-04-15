@@ -33,6 +33,7 @@ target_sources(digitsynth
 		${SOURCE_DIRECTORY}/midi-driver.cpp
     ${SOURCE_DIRECTORY}/TLC59711.cpp
 		${SOURCE_DIRECTORY}/ModeManager.cpp
+		${SOURCE_DIRECTORY}/MessageBuilder.cpp
 		${SOURCE_DIRECTORY}/ChordManager.cpp
 		${SOURCE_DIRECTORY}/MidiScaler.cpp
         ${SOURCE_DIRECTORY}/patterns.cpp
@@ -50,6 +51,7 @@ target_sources(digitsynth_static
     ${SOURCE_DIRECTORY}/TLC59711.cpp
     	${SOURCE_DIRECTORY}/flex-sensor.cpp
     	${SOURCE_DIRECTORY}/button-driver.cpp
+	${SOURCE_DIRECTORY}/MessageBuilder.cpp
     	${SOURCE_DIRECTORY}/ModeManager.cpp
     	${SOURCE_DIRECTORY}/ChordManager.cpp
     	${SOURCE_DIRECTORY}/MidiScaler.cpp
