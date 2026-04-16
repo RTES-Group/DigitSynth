@@ -58,7 +58,7 @@ target_sources(digitsynth_static
 
 link_directories("/usr/local/lib/")
 
-target_link_libraries(digitsynth        gpiodcxx ads1115rpi rtmidi)
-target_link_libraries(digitsynth_static gpiodcxx ads1115rpi rtmidi)
+target_link_libraries(digitsynth        gpiod gpiodcxx ads1115rpi rtmidi)
+target_link_libraries(digitsynth_static gpiod gpiodcxx ads1115rpi rtmidi)
 
 add_subdirectory(test)
