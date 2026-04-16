@@ -100,6 +100,8 @@ See the issues tab for a list of potential contributions. In particular we would
 
 ---
 
+## Social Media
+
 Follow our build journey on Instagram: [![Instagram](https://img.shields.io/badge/Instagram-%23E1306C.svg?style=flat&logo=instagram&logoColor=white)](https://instagram.com/digitsynth_)
 
 ---
