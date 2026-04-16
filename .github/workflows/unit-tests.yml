@@ -25,10 +25,8 @@ jobs:
 
     - name: test
       run: | 
-        echo $LD_LIBRARY_PATH
-        LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-        echo $LD_LIBRARY_PATH
-        cd application/ 
+        LD_LIBRARY_PATH=/usr/local/lib/
+        cd application/
         make test 
     
     - name: archive-test-log
