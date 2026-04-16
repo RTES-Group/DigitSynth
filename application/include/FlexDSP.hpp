@@ -13,7 +13,7 @@ public:
 
     // sampleRate = how often your ADC fires in Hz (check your ADS1115 config)
     // cutoffHz   = frequency above which noise is attenuated (5Hz is a good start)
-    FlexDSP(float sampleRate = 100.0f, float cutoffHz = 5.0f);
+    FlexDSP(float sampleRate = 108.7f, float cutoffHz = 5.0f);
 
     // called by FlexSensor, drop in place of SynthController's direct callback
     void onFlexData(std::array<ExtensionData, 4> rawData);
@@ -25,8 +25,8 @@ public:
     void reset();
 
 private:
-    // one 2nd order Butterworth low pass per sensor channel
-    std::array<Iir::Butterworth::LowPass<2>, 4> filters;
+    // one 4th order Butterworth low pass per sensor channel
+    std::array<Iir::Butterworth::LowPass<4>, 4> filters;
     std::optional<FilteredCallback> callback;
 
 };
