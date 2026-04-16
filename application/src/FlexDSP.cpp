@@ -1,8 +1,8 @@
 #include "FlexDSP.hpp"
 
 FlexDSP::FlexDSP(float sampleRate, float cutoffHz) {
-    // Butterworth expects normalised frequency: cutoff / sampleRate
-    // must be between 0 and 0.5 (i.e. cutoffHz must be less than sampleRate/2)
+    // iir1 setup() takes order + normalised cutoff (0.0–0.5)
+    // where 0.5 = Nyquist. cutoffHz / sampleRate 
     double normalisedCutoff = cutoffHz / sampleRate;
     for (auto& f : filters) {
         f.setup(2, normalisedCutoff);
