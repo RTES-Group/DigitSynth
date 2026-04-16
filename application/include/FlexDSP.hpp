@@ -4,7 +4,7 @@
 #include <array>
 #include <functional>
 #include <optional>
-#include "Butterworth.h"
+#include <iir/Butterworth.h>
 
 using FilteredCallback = std::function<void(std::array<ExtensionData, 4>)>;
 
