@@ -7,19 +7,15 @@
 #include "MidiScaler.hpp"
 #include "ChordManager.hpp"
 #include <cstdint>
-#include <memory>
-#include "types.h"
 #include "TLC59711.h"
 #include "patterns.h"
-#include "flex-sensor.h"
-#include "FlexDSP.h"
+#include "FlexDSP.hpp"
 
 class SynthController {
 public:
     // TLC59711 is passed in by reference — SynthController uses it but does
     // not own it. The caller (main) owns the hardware and its lifetime.
-    explicit SynthController(TLC59711& tlc);
-    ~SynthController();
+    explicit SynthController(TLC59711& tlc, FlexSensor &fs);
 
     ControlMode getCurrentMode(); // for testing
     uint8_t getCurrentChord();   // for testing

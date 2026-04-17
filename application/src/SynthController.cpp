@@ -1,8 +1,9 @@
 #include "SynthController.hpp"
+#include "FlexDSP.hpp"
 #include "TLC59711.h"
 
-SynthController::SynthController(TLC59711& tlc)
-    : _tlc(tlc), _ripple(tlc), _fade(_tlc)
+SynthController::SynthController(TLC59711& tlc, FlexSensor &fs)
+    : _tlc(tlc), _ripple(tlc), _fade(_tlc), flexDSP(fs)
 {
     this->buttonDriver.registerSingleButtonCallback([this] (int index) {
         std::cout << "on button event called " << index << std::endl;
@@ -130,12 +131,6 @@ SynthController::SynthController(TLC59711& tlc)
         }
         */
     });
-
-    this->flexSensor.begin();
-}
-
-SynthController::~SynthController() {
-    std::cout << this->flexSensor.getNSamples() << std::endl;
 }
 
 ControlMode SynthController::getCurrentMode(){

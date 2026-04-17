@@ -13,11 +13,10 @@ int main() {
     gpio::setupGpio();
     
     TLC59711 tlc(17, 27);
+    FlexSensor fx;
+    fx.begin();
     tlc.start();
-    SynthController synth(tlc);
-    MidiDriver md; 
-    
-    
+    SynthController synth(tlc, fx);
     
     getchar();
     
