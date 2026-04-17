@@ -1,11 +1,10 @@
 #include "button-driver.h"
 #include "gpio.h"
-#include "types.h"
 
 bool test_registerSingleButtonCallback() {
     ButtonDriver bd; 
     
-    bd.registerSingleButtonCallback([] (ButtonIndex idx) {
+    bd.registerSingleButtonCallback([] (ButtonDriver::ButtonIndex idx) {
         (void) idx; 
     });
     
