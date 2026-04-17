@@ -27,13 +27,13 @@ public:
      * @param onDone  Called (from the worker thread) when the pattern finishes
      *                naturally.  May be nullptr.
      */
-    void start(DoneCallback onDone = nullptr);
+    virtual  void start(DoneCallback onDone = nullptr);
 
     /**
      * Signal the pattern to stop and block until the thread exits.
      * Safe to call even if the pattern has already finished.
      */
-    void stop();
+    virtual  void stop();
 
 protected:
     std::atomic<bool>  _running{false};

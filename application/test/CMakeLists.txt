@@ -2,59 +2,19 @@ cmake_minimum_required(VERSION 3.23)
 
 enable_testing()
 
-# test_foo
-add_executable(test_foo test_foo.cpp)
-target_include_directories(test_foo PRIVATE include)
-target_link_libraries(test_foo digitsynth_static -lgpiod)
-add_test(NAME TestFoo COMMAND test_foo)
+function(create_test EXE NAME FILE)
+    add_executable(${EXE} ${FILE})
+    target_include_directories(${EXE} PRIVATE include)
+    target_include_directories(${EXE} PRIVATE {CMAKE_SOURCE_DIR}/test/mocks)
+    link_directories("/usr/local/lib/")
+    target_link_libraries(${EXE} digitsynth_static gpiod gpiodcxx ads1115rpi rtmidi)
+    add_test(NAME ${NAME} COMMAND ${EXE})
+endfunction()
 
-# test_TLC
-add_executable(test_TLC test_TLC.cpp)
-target_include_directories(test_TLC PRIVATE ${CMAKE_SOURCE_DIR}/include)
-target_link_libraries(test_TLC digitsynth_static)
-add_test(NAME TestTLC COMMAND test_TLC)
+#create_test(test-foo TestFoo test_foo.cpp)
+#create_test(test-adc-driver TestAdcDriver test_adc-driver.cpp)
+# create_test(test-combined TestCombined        synth_logic/combined_test.cpp)
+# create_test(test-mode-manager TestModeManager synth_logic/mode_manager_test.cpp)
+# create_test(test-gpio TestGpio test_gpio.cpp)
+create_test(test_led_controller TestLedController synth_logic/led_controller_test.cpp)
 
-
-# add_executable(test_combined synth_logic/combined_test.cpp)
-# target_include_directories(test_TLC PRIVATE ${CMAKE_SOURCE_DIR}/include)
-# target_link_libraries(test_combined digitsynth_static)
-# add_test(NAME TestCombined COMMAND test_combined)
-# 
-# add_executable(test_midi_flex synth_logic/midi_flex_test.cpp)
-# target_include_directories(test_midi_flex PRIVATE ${CMAKE_SOURCE_DIR}/include)
-# target_link_libraries(test_midi_flex digitsynth_static)
-# add_test(NAME TestMidiFlex COMMAND test_midi_flex)
-#
-
-# test_mode_manager
-add_executable(test_mode_manager synth_logic/mode_manager_test.cpp)
-target_include_directories(test_mode_manager PRIVATE ${CMAKE_SOURCE_DIR}/include)
-target_link_libraries(test_mode_manager digitsynth_static)
-add_test(NAME TestModeManager COMMAND test_mode_manager)
-
-# test_chord_manager
-add_executable(test_chord_manager synth_logic/chord_manager_test.cpp)
-target_include_directories(test_chord_manager PRIVATE ${CMAKE_SOURCE_DIR}/include)
-target_link_libraries(test_chord_manager digitsynth_static)
-add_test(NAME TestChordManager COMMAND test_chord_manager)
-
-# test_message_builder
-add_executable(test_message_builder synth_logic/message_builder_test.cpp)
-target_include_directories(test_message_builder PRIVATE ${CMAKE_SOURCE_DIR}/include)
-target_link_libraries(test_message_builder digitsynth_static)
-add_test(NAME TestMessageBuilder COMMAND test_message_builder)
-
-# test_lfo_manager
-add_executable(test_lfo_manager synth_logic/lfo_manager_test.cpp)
-target_include_directories(test_lfo_manager PRIVATE ${CMAKE_SOURCE_DIR}/include)
-target_link_libraries(test_lfo_manager digitsynth_static)
-add_test(NAME TestLfoManager COMMAND test_lfo_manager)
-
-# test_led_controller
-add_executable(test_led_controller synth_logic/led_controller_test.cpp)
-target_include_directories(test_led_controller PRIVATE 
-    ${CMAKE_SOURCE_DIR}/include
-    ${CMAKE_SOURCE_DIR}/test/mocks
-)
-target_link_libraries(test_led_controller digitsynth_static)
-add_test(NAME TestLedController COMMAND test_led_controller)
