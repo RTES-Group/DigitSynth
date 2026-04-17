@@ -3,11 +3,10 @@
 
 #include <string>
 #include <vector>
+#include <rtmidi/RtMidi.h>
 
 #include "MidiTypes.hpp"
 #include "types.h"
-
-class RtMidiOut;
 
 class MidiDriver {
     public:
