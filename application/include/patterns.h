@@ -3,7 +3,7 @@
 #include <functional>
 #include <atomic>
 #include <thread>
-#include "TLC59711.h"
+#include "ITLC59711.h"
 
 /**
  * Base class for LED patterns.
@@ -20,7 +20,7 @@ class Pattern {
 public:
     using DoneCallback = std::function<void()>;
 
-    explicit Pattern(TLC59711& tlc) : _tlc(tlc) {}
+    explicit Pattern(ITLC59711& tlc) : _tlc(tlc) {}
     virtual ~Pattern() { stop(); }
 
     /**
@@ -37,7 +37,7 @@ public:
     void stop();
 
 protected:
-    TLC59711&          _tlc;
+    ITLC59711&          _tlc;
     std::atomic<bool>  _running{false};
     DoneCallback       _onDone;
 
@@ -59,7 +59,7 @@ private:
  */
 class PatternFade : public Pattern {
 public:
-    explicit PatternFade(TLC59711& tlc) : Pattern(tlc) {}
+    explicit PatternFade(ITLC59711& tlc) : Pattern(tlc) {}
 
 protected:
     void run() override;
@@ -72,7 +72,7 @@ protected:
  */
 class PatternRipple : public Pattern {
 public:
-    explicit PatternRipple(TLC59711& tlc) : Pattern(tlc) {}
+    explicit PatternRipple(ITLC59711& tlc) : Pattern(tlc) {}
 
 protected:
     void run() override;
