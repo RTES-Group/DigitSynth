@@ -4,6 +4,7 @@
 #include <atomic>
 #include <thread>
 #include "TLC59711.h"
+#include "types.h"
 
 /**
  * Base class for LED patterns.
