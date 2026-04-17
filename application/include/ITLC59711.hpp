@@ -8,7 +8,7 @@
  LED driver must be able to update() channels
  
  TLC59711 is the real LED driver
- FakeTLC59711 just records what is sent to it and is used for unit testing the LedController class
+ MockTLC59711 just records what is sent to it and is used for unit testing the LedController class
 */
 
 class ITLC59711 {
