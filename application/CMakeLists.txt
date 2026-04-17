@@ -39,6 +39,8 @@ target_sources(digitsynth
         ${SOURCE_DIRECTORY}/patterns.cpp
         ${SOURCE_DIRECTORY}/FlexDSP.cpp
        	${SOURCE_DIRECTORY}/LedController.cpp
+        ${SOURCE_DIRECTORY}/LfoManager.cpp
+        ${SOURCE_DIRECTORY}/MessageBuilder.cpp
 )
 
 target_sources(digitsynth_static
@@ -61,6 +63,8 @@ target_sources(digitsynth_static
         ${SOURCE_DIRECTORY}/patterns.cpp
         ${SOURCE_DIRECTORY}/TLC59711.cpp
     	${SOURCE_DIRECTORY}/LedController.cpp
+        ${SOURCE_DIRECTORY}/LfoManager.cpp
+        ${SOURCE_DIRECTORY}/MessageBuilder.cpp
 )
 
 link_directories("/usr/local/lib/")
