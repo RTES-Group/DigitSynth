@@ -22,19 +22,24 @@ bool test_registerAllButtonsCallback() {
     return true;
 }
 
-bool test_singleButton() {
-    ButtonDriver bd; 
-    bool booped = false;
-   
-    bd.registerSingleButtonCallback([&booped] (ButtonIndex idx) {
-        booped = idx == 0;
-    });
+
+/**
+ * Make sure that destroying an instance of `ButtonDriver` frees up the GPIO pins.
+ * If the destruction does not work properly then the `::setPin` calls should cause
+ * an exception. 
+ */
+bool test_destruct() {
+    auto bd = new ButtonDriver();
     
-    gpio::setPin(18, false);
+    delete bd; 
+
+    gpio::setPin(14, true);
+    gpio::setPin(15, true);
     gpio::setPin(18, true);
-    gpio::setPin(18, false);
+    gpio::setPin(23, true);
+
     
-    return booped;
+    return true;
 }
 
 int main() {
@@ -44,6 +49,7 @@ int main() {
     
     success &= test_registerSingleButtonCallback();
     success &= test_registerAllButtonsCallback();
+    success &= test_destruct();
     
     
     return success ? 0 : -1;
