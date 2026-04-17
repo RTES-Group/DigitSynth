@@ -18,7 +18,6 @@
  */
 class Pattern {
 public:
-    using DoneCallback = std::function<void()>;
 
     explicit Pattern(TLC59711& tlc) : _tlc(tlc) {}
     virtual ~Pattern() { stop(); }
