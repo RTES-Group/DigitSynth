@@ -1,9 +1,13 @@
 #include "LedController.hpp"
+#include "ITLC59711.hpp"
+#include <cstdio>
 
-LedController::LedController(TLC59711& tlc, Pattern& ripple)
+LedController::LedController(ITLC59711& tlc, Pattern& ripple)
     : _tlc(tlc), _ripple(ripple) {}
 
 void LedController::update(ControlMode mode, bool lfoEnabled, LfoShape shape, std::array<float, 4> flexValues){
+    (void)lfoEnabled;
+    (void)shape;
     if (mode == CHORD) {
         if (!rippleRunning) {
             startRipple();
@@ -17,27 +21,19 @@ void LedController::update(ControlMode mode, bool lfoEnabled, LfoShape shape, st
         }
         // handle normal LED stuff
         TLC59711::Channels c{};
-        c[0] = 1; // thumb LED on
-        c[5] = 1; // thumb LED on
-        c[6] = 1; // indicates normal mode
-        if (lfoEnabled) { c[7] = 1;} // indicates LFO enabled/disabled
-        else { c[7] = 0;}
-        switch(shape){
-            case SIN:
-                c[8] = 0;
-                break;
-            case SQR:
-                c[8] = 0.5;
-                break;
-            case SH:
-                c[8] = 1;
-                break;
-        }
-        c[9] = 1;
-        c[1] = flexValues[0];
-        c[2] = flexValues[1];
-        c[3] = flexValues[2];
-        c[4] = flexValues[3];
+
+        // Left hand — flex brightness per finger
+        c[Led::L_pinky]  = flexValues[3];
+        c[Led::L_index]  = flexValues[0];
+        c[Led::L_middle] = flexValues[1];
+        c[Led::L_ring]   = flexValues[2];
+
+        // Right hand — flex brightness per finger
+        c[Led::R_pinky]  = flexValues[3];
+        c[Led::R_index]  = flexValues[0];
+        c[Led::R_middle] = flexValues[1];
+        c[Led::R_ring]   = flexValues[2];
+
         this->_tlc.update(c);
     }
 }

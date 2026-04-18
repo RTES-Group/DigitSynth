@@ -19,11 +19,12 @@ SynthController::SynthController(TLC59711& tlc)
         exit(-1);
     }
 
-    std::cout << "Opening port 0...\n";
-    this->midiDriver.openPort(0);
+    this->midiDriver.openPort(2);
     
     this->buttonDriver.registerSingleButtonCallback([this] (int index) {
+        std::cout << "\nbutton pressed " << index << std::endl;
         if (modeManager.getCurrentMode() == NORMAL){
+            midi_message msg; 
             switch(index){
                 case 0: // enter chord mode
                     modeManager.updateMode();
@@ -33,11 +34,10 @@ SynthController::SynthController(TLC59711& tlc)
                     break;
                 case 2: // cycle through the LFO shapes
                     lfoManager.cycleShape();
-                    midi_message msg = {0xB0, 3, static_cast<uint8_t>(lfoManager.getShape())};
+                    msg = {0xB0, 3, static_cast<uint8_t>(lfoManager.getShape())};
                     midiDriver.sendMessage(msg);
                     break;
-                case 3: // turn off/on
-                    
+                default:
                     break;
             }
         }
