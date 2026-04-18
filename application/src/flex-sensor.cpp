@@ -2,6 +2,7 @@
 #include "flex-sensor.h"
 #include <ads1115rpi.h>
 #include <array>
+#include <thread>
 
 void FlexSensor::updateIfNeeded() {
     if (this->currentChannel != ADS1115settings::AIN0 || !this->callback.has_value()) { return; } 
@@ -14,6 +15,7 @@ void FlexSensor::updateIfNeeded() {
     
     this->n_samples++;
     this->callback.value()(data);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
 }
 
 uint64_t FlexSensor::getNSamples() {
@@ -44,6 +46,7 @@ FlexSensor::FlexSensor() {
         
         this->adc.readChannel(this->currentChannel, &this->adsCallback);
         this->updateIfNeeded();
+        
     };
 }
 

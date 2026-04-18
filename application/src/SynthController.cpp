@@ -22,7 +22,7 @@ SynthController::SynthController(TLC59711& tlc)
     this->midiDriver.openPort(2);
     
     this->buttonDriver.registerSingleButtonCallback([this] (int index) {
-        std::cout << "button pressed " << index << std::endl;
+        std::cout << "\nbutton pressed " << index << std::endl;
         if (modeManager.getCurrentMode() == NORMAL){
             midi_message msg; 
             switch(index){

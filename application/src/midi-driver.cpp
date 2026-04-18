@@ -1,6 +1,7 @@
 #include "midi-driver.hpp"
 
 #include <rtmidi/RtMidi.h>
+#include <string>
 #include <stdexcept>
 
 MidiDriver::MidiDriver()
@@ -41,5 +42,7 @@ void MidiDriver::sendMessage(const midi_message& msg) {
         msg.data_2
     };
 
+    std::cout << std::string(200, '\b');
+    std::cout << "Sending note on message " << (int) msg.status << " " << (int) msg.data_1 << " " << (int) msg.data_2;
     midiOut_.sendMessage(&bytes);
 }
