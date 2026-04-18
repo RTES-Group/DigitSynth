@@ -11,7 +11,7 @@
 class TLC59711 {
     friend class TLC59711Test;
 public:
-    static constexpr int NUM_LEDS = 10;
+    static constexpr int NUM_LEDS = 8;
     using Brightness = float;               
 
     using Channels = std::array<Brightness, NUM_LEDS>;
@@ -39,8 +39,7 @@ private:
     static constexpr int FRAME_TO_GS[NUM_LEDS] = {
         0, 1, 2,
         3, 4, 5,
-        6, 7, 8,
-        9
+        6, 7
     };
 
     static constexpr int  CHANNELS_PER_DRIVER = 12;
