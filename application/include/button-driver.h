@@ -15,8 +15,8 @@ class IButtonDriver {
 public:
     virtual ~IButtonDriver() = default;
 
-    virtual void registerButtonCallback(ButtonCallback callback);  
-    virtual void deregisterButtonCallback();  
+    virtual void registerButtonCallback(ButtonCallback callback) = 0;  
+    virtual void deregisterButtonCallback() = 0;  
 };
 
 class ButtonDriver : public IButtonDriver {
