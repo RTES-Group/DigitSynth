@@ -47,6 +47,18 @@ private:
         { ADS1115settings::AIN2, 0.0 },
         { ADS1115settings::AIN3, 0.0 },
     };
+    std::unordered_map<ADS1115settings::Input, ExtensionData> mins = {
+        { ADS1115settings::AIN0, 5.0 },
+        { ADS1115settings::AIN1, 5.0 },
+        { ADS1115settings::AIN2, 5.0 },
+        { ADS1115settings::AIN3, 5.0 },
+    };
+    std::unordered_map<ADS1115settings::Input, ExtensionData> maxes = {
+        { ADS1115settings::AIN0, 0.0 },
+        { ADS1115settings::AIN1, 0.0 },
+        { ADS1115settings::AIN2, 0.0 },
+        { ADS1115settings::AIN3, 0.0 },
+    };
     std::optional<ExtensionCallback> callback = {};     
     AdcDriver adc; 
     ADS1115settings::Input currentChannel = ADS1115settings::AIN0;
