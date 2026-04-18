@@ -16,6 +16,7 @@ public:
     virtual ~IFlexSensor() = default;
     
     virtual void registerCallback(ExtensionCallback) = 0;
+    virtual void begin() = 0;
 };
     
 /**
