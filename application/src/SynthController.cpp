@@ -3,7 +3,7 @@
 #include "TLC59711.h"
 #include "flex-sensor.h"
 
-SynthController::SynthController(TLC59711& tlc)
+SynthController::SynthController(ITLC59711& tlc)
 : _ripple(tlc), ledController(tlc, _ripple)
 {
     
@@ -37,6 +37,9 @@ SynthController::SynthController(TLC59711& tlc)
                     msg = {0xB0, 3, static_cast<uint8_t>(lfoManager.getShape())};
                     midiDriver.sendMessage(msg);
                     break;
+                case 3: // change LED pattern
+                    ledController.togglePattern();
+                    break;
                 default:
                     break;
             }
@@ -52,12 +55,17 @@ SynthController::SynthController(TLC59711& tlc)
                     midiDriver.sendMessage(noteOff);
                 }
                 chordManager.updateChord(index);
+                for (int i = 0; i < 4; i++){
+                    uint8_t note = chordManager.getNote(i);
+                    midi_message msg = {0x90, note, 120};
+                    midiDriver.sendMessage(msg);
+                }
             }
         }
     });
     
     this->flexDSP.registerCallback([this] (std::array<ExtensionData, 4> values){
-        if (modeManager.getCurrentMode() == NORMAL){
+        if (true){
             for (int i = 0; i < 4; i++){
                 uint8_t scaledVal = midiScaler.scaleValue(values[i]);
                 if (i == 2 && !lfoManager.isEnabled()) {
@@ -70,6 +78,7 @@ SynthController::SynthController(TLC59711& tlc)
                 
             }
         }
+        /*
         else {
             for (int i = 0; i < 4; i++){
                 uint8_t velocity = midiScaler.scaleValue(values[i]);
@@ -78,6 +87,7 @@ SynthController::SynthController(TLC59711& tlc)
                 midiDriver.sendMessage(msg);
             }
         }
+         */
         ledController.update(modeManager.getCurrentMode(), lfoManager.isEnabled(), lfoManager.getShape(), {values[0], values[1], values[2], values[3]});
     });
     

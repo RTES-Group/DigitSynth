@@ -35,6 +35,7 @@ class LedController {
 public:
     explicit LedController(ITLC59711& tlc, Pattern& ripple);
     void update(ControlMode mode, bool lfoEnabled, LfoShape shape, std::array<float, 4> flexValues);
+    void togglePattern();
 private:
     void startRipple();
     void stopRipple();
@@ -42,6 +43,8 @@ private:
     ITLC59711& _tlc;
     Pattern& _ripple; //in tests we pass a MockPattern, in practice we pass a PatternRipple
     bool rippleRunning = false;
+    
+    LedPattern pattern = STATUS;
 };
 
 #endif /* LedController_hpp */
