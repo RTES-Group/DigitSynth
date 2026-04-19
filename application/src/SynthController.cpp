@@ -33,7 +33,7 @@ SynthController::SynthController(TLC59711& tlc, button_driver::IButtonDriver *bu
         midiDriver.sendMessage(msg);
     }
     
-    this->buttonDriver.registerButtonCallback([this] (int index) {
+    this->buttonDriver->registerButtonCallback([this] (int index) {
         std::cout << "\nbutton pressed " << index << std::endl;
         if (modeManager.getCurrentMode() == NORMAL){
             midi_message msg; 
