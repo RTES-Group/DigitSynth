@@ -38,7 +38,7 @@ SynthController::SynthController(
         midiDriver->sendMessage(msg);
     }
     
-    this->buttonDriver->registerButtonCallback([this] (int index) {
+    this->buttonDriver->registerSingleButtonCallback([this] (button_driver::ButtonIndex index) {
         std::cout << "\nbutton pressed " << index << std::endl;
         if (modeManager.getCurrentMode() == NORMAL){
             midi_message msg; 

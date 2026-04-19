@@ -13,7 +13,6 @@
 typedef std::optional<uint32_t> AdcData;
 typedef float                   ExtensionData;
 typedef float                   Brightness;
-typedef int                     ButtonIndex;
 
 typedef std::function<void(std::array<ExtensionData, 4>)> ExtensionCallback;
 typedef std::function<void(void)>                         GpioCallback;
