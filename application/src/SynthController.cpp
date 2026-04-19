@@ -32,7 +32,7 @@ SynthController::SynthController(ITLC59711& tlc)
         midiDriver.sendMessage(msg);
     }
     
-    this->buttonDriver.registerSingleButtonCallback([this] (int index) {
+    this->buttonDriver.registerButtonCallback([this] (int index) {
         std::cout << "\nbutton pressed " << index << std::endl;
         if (modeManager.getCurrentMode() == NORMAL){
             midi_message msg; 
