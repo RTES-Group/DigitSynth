@@ -1,6 +1,7 @@
 
 #include "flex-sensor.h"
 #include "adc-driver.h"
+#include "voltage-scaler.h"
 #include <ads1115rpi.h>
 #include <array>
 #include <thread>
@@ -11,10 +12,10 @@ void FlexSensor::updateIfNeeded() {
     if (!this->callback.has_value()) { return; } 
     
     std::array<ExtensionData, 4> data;
-    data[0] = mapVoltage(this->values[ADS1115settings::AIN0], ADS1115settings::AIN0);
-    data[1] = mapVoltage(this->values[ADS1115settings::AIN1], ADS1115settings::AIN1);
-    data[2] = mapVoltage(this->values[ADS1115settings::AIN2], ADS1115settings::AIN2);
-    data[3] = mapVoltage(this->values[ADS1115settings::AIN3], ADS1115settings::AIN3);
+    data[0] = this->vs->scale(this->values[ADS1115settings::AIN0], ADS1115settings::AIN0);
+    data[1] = this->vs->scale(this->values[ADS1115settings::AIN1], ADS1115settings::AIN1);
+    data[2] = this->vs->scale(this->values[ADS1115settings::AIN2], ADS1115settings::AIN2);
+    data[3] = this->vs->scale(this->values[ADS1115settings::AIN3], ADS1115settings::AIN3);
     
     this->n_samples++;
     this->callback.value()(data);
@@ -33,14 +34,7 @@ uint64_t FlexSensor::getNSamples() {
     return this->n_samples;
 }
 
-float FlexSensor::mapVoltage(float f, ADS1115settings::Input channel) {
-    if (f > this->maxes[channel]) { this->maxes[channel] = f; }
-    if (f < this->mins[channel])  { this->mins[channel] =  f; }
-    
-    return (f - this->mins[channel]) / (this->maxes[channel] - this->mins[channel]);
-}
-
-FlexSensor::FlexSensor(adc_driver::IAdcDriver *adcDriver) : adc(adcDriver) {
+FlexSensor::FlexSensor(adc_driver::IAdcDriver *adcDriver, voltage_scaler::IVoltageScaler *voltageScaler) : adc(adcDriver), vs(voltageScaler) {
     this->adsCallback = [&] (float f) {
         auto prevChannel = this->currentChannel;
         

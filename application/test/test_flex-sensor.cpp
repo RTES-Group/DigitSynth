@@ -1,5 +1,6 @@
 #include "adc-driver.h"
 #include "flex-sensor.h"
+#include "voltage-scaler.h"
 #include <ads1115rpi.h>
 #include <chrono>
 #include <cstddef>
@@ -28,9 +29,20 @@ public:
     }
 };
 
+class MockVoltageScaler : public voltage_scaler::IVoltageScaler {
+    
+    float scale(float v, ADS1115settings::Input channel) {
+        (void) channel;
+        
+        return v; 
+    }
+};
+
 bool testReceiveData() {
-    auto adc = new MockAdcDriver();
-    auto fs = new flex_sensor::FlexSensor(static_cast<adc_driver::IAdcDriver *>(adc));
+    auto fs = new flex_sensor::FlexSensor(
+        static_cast<adc_driver::IAdcDriver *>(new MockAdcDriver), 
+        static_cast<voltage_scaler::IVoltageScaler *>(new MockVoltageScaler)
+    );
     
     std::vector<std::array<flex_sensor::ExtensionData, 4>> samples;
     

@@ -6,6 +6,7 @@
 #include "flex-sensor.h"
 #include "gpio.h"
 #include "midi-driver.hpp"
+#include "voltage-scaler.h"
 #include <iostream>
 
 int main() {
@@ -13,8 +14,10 @@ int main() {
     
     auto bd = new button_driver::ButtonDriver(); 
     auto adc = new adc_driver::Ads1115Driver();
-    auto fs = new flex_sensor::FlexSensor(static_cast<adc_driver::IAdcDriver *>(adc));
+    auto vs = new voltage_scaler::VoltageScaler();
+    auto fs = new flex_sensor::FlexSensor(static_cast<adc_driver::IAdcDriver *>(adc), static_cast<voltage_scaler::IVoltageScaler *>(vs));
     adc = nullptr;
+    vs = nullptr; 
     auto md = new midi_driver::MidiDriver();
     TLC59711 tlc(17, 27);
     tlc.start();
