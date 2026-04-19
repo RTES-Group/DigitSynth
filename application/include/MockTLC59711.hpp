@@ -1,7 +1,7 @@
 #ifndef MockTLC59711_hpp
 #define MockTLC59711_hpp
 
-#include "ITLC59711.hpp"
+#include "ILedDriver.hpp"
 
 namespace led_driver {
 
