@@ -10,7 +10,7 @@
 #include "flex-sensor.h"
 #include "midi-driver.hpp"
 #include "types.h"
-#include "TLC59711.h"
+#include "ITLC59711.hpp"
 #include "patterns.h"
 #include "LfoManager.hpp"
 #include "FlexDSP.hpp"
@@ -20,8 +20,7 @@ public:
     //TLC59711 passed in by reference — SynthController uses it but doesn't own it
     explicit SynthController(TLC59711& tlc, button_driver::IButtonDriver *buttonDriver, flex_sensor::IFlexSensor *flexSensor);
     ~SynthController();
-    
-    void registerMidiCallback(MidiCallback callback);
+
 private:
     ModeManager  modeManager;
     ChordManager chordManager;
