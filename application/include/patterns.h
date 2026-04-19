@@ -3,7 +3,7 @@
 #include <functional>
 #include <atomic>
 #include <thread>
-#include "TLC59711.h"
+#include "ILedDriver.hpp"
 
 /**
  * Base class for LED patterns.
@@ -60,5 +60,5 @@ public:
 protected:
     void run() override;
 private:
-    ILedDriver& _tlc;
+    led_driver::ILedDriver& _tlc;
 };

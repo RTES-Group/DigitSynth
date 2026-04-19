@@ -8,7 +8,7 @@
 #include <chrono>
 
 SynthController::SynthController(led_driver::ILedDriver *tlc, button_driver::IButtonDriver *buttonDriver, flex_sensor::IFlexSensor *flexSensor)
-: _ripple(tlc), ledController(tlc, _ripple), buttonDriver(buttonDriver), flexDSP(flexSensor)
+: _ripple(*tlc), ledController(*tlc, _ripple), buttonDriver(buttonDriver), flexDSP(flexSensor)
 {
     
     auto ports = this->midiDriver.listOutputPorts();
