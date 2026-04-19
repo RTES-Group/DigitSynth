@@ -4,15 +4,16 @@
 #include "button-driver.h"
 #include "flex-sensor.h"
 #include "midi-driver.hpp"
+#include <memory>
 #include <thread>
 #include <chrono>
 
 SynthController::SynthController(
     led_driver::ILedDriver *tlc,
-    button_driver::IButtonDriver *buttonDriver,
-    flex_sensor::IFlexSensor *flexSensor, 
-    midi_driver::IMidiDriver *midiDriver
-): midiDriver(midiDriver), _ripple(*tlc), ledController(*tlc, _ripple), buttonDriver(buttonDriver), flexDSP(flexSensor)
+    std::unique_ptr<button_driver::IButtonDriver> buttonDriver,
+    std::unique_ptr<flex_sensor::IFlexSensor> flexSensor, 
+    std::unique_ptr<midi_driver::IMidiDriver> midiDriver
+): midiDriver(std::move(midiDriver)), _ripple(*tlc), ledController(*tlc, _ripple), buttonDriver(std::move(buttonDriver)), flexDSP(std::move(flexSensor))
 {
     
     auto ports = this->midiDriver->listOutputPorts();

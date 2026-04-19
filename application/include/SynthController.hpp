@@ -20,9 +20,9 @@ class SynthController {
 public:
     explicit SynthController(
         led_driver::ILedDriver *tlc,
-        button_driver::IButtonDriver *buttonDriver,
-        flex_sensor::IFlexSensor     *flexSensor, 
-        midi_driver::IMidiDriver     *midiDriver
+        std::unique_ptr<button_driver::IButtonDriver> buttonDriver,
+        std::unique_ptr<flex_sensor::IFlexSensor>     flexSensor, 
+        std::unique_ptr<midi_driver::IMidiDriver>     midiDriver
     );
     ~SynthController();
 

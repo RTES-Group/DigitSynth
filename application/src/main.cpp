@@ -9,6 +9,7 @@
 #include "voltage-scaler.h"
 #include <condition_variable>
 #include <iostream>
+#include <memory>
 #include <mutex>
 
 int main() {
@@ -27,22 +28,14 @@ int main() {
     
     auto adc = new adc_driver::Ads1115Driver();
     auto vs = new voltage_scaler::VoltageScaler();
-    auto fs = new flex_sensor::FlexSensor(static_cast<adc_driver::IAdcDriver *>(adc), static_cast<voltage_scaler::IVoltageScaler *>(vs));
-    adc = nullptr;
-    vs = nullptr; 
-    auto md = new midi_driver::MidiDriver();
     auto tlc = new led_driver::TLC59711(17, 27);
     tlc->start();
     SynthController synth(
         static_cast<led_driver::ILedDriver *>(tlc),
-        static_cast<button_driver::IButtonDriver *>(bd),
-        static_cast<flex_sensor::IFlexSensor *>(fs),
-        static_cast<midi_driver::IMidiDriver *>(md)
+        std::make_unique<button_driver::ButtonDriver>(),
+        std::make_unique<flex_sensor::FlexSensor>(static_cast<adc_driver::IAdcDriver *>(adc), static_cast<voltage_scaler::IVoltageScaler *>(vs)),
+        std::make_unique<midi_driver::MidiDriver>()
     );
-    bd = nullptr; 
-    fs = nullptr; 
-    md = nullptr;
-    tlc = nullptr;
    
     {
         std::unique_lock lock(m);
