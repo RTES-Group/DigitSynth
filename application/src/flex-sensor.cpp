@@ -19,7 +19,7 @@ void FlexSensor::updateIfNeeded() {
     
     this->n_samples++;
     this->callback.value()(data);
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
+    // std::this_thread::sleep_for(std::chrono::milliseconds(100));
     
     
     // std::cout << std::string(1000, '\b');
@@ -65,6 +65,7 @@ FlexSensor::FlexSensor(adc_driver::IAdcDriver *adcDriver, voltage_scaler::IVolta
 
 FlexSensor::~FlexSensor() {
     this->running = false; 
+    std::cout << "samples: " << this->getNSamples() << std::endl;
     if (worker.joinable()) { worker.join(); }
 }
 
