@@ -21,12 +21,12 @@ void FlexSensor::updateIfNeeded() {
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
     
     
-    std::cout << std::string(1000, '\b');
-    for (int i = 0; i < 4; i++) {
-        auto channel = (ADS1115settings::Input) i;
-        printf("| %.3f\t%.3f\t%.3f\t%.3f |", data[i], this->values[channel], this->maxes[channel], this->mins[channel]);
-    }
-    printf("\n");
+    // std::cout << std::string(1000, '\b');
+    // for (int i = 0; i < 4; i++) {
+        // auto channel = (ADS1115settings::Input) i;
+        // printf("| %.3f\t%.3f\t%.3f\t%.3f |", data[i], this->values[channel], this->maxes[channel], this->mins[channel]);
+    // }
+    // printf("\n");
 }
 
 uint64_t FlexSensor::getNSamples() {
@@ -64,8 +64,14 @@ FlexSensor::FlexSensor(adc_driver::IAdcDriver *adcDriver) : adc(adcDriver) {
         }
         
         this->values[prevChannel] = f;  
+        if (!this->running) { return; }
         this->adc->readChannel(this->currentChannel, &this->adsCallback);
     };
+}
+
+FlexSensor::~FlexSensor() {
+    this->running = false; 
+    if (worker.joinable()) { worker.join(); }
 }
 
 void FlexSensor::registerCallback(ExtensionCallback callback) {
@@ -73,5 +79,5 @@ void FlexSensor::registerCallback(ExtensionCallback callback) {
 }
 
 void FlexSensor::begin() {
-    this->adc->readChannel(this->currentChannel, &this->adsCallback);
+    this->worker = std::thread([&] () {this->adc->readChannel(this->currentChannel, &this->adsCallback);}); 
 }

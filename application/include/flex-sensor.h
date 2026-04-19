@@ -29,6 +29,7 @@ class FlexSensor : public IFlexSensor {
 public:
         
     FlexSensor(adc_driver::IAdcDriver *adcDriver);
+    ~FlexSensor();
 
     /**
      * Start sampling the sensors.
@@ -73,6 +74,9 @@ private:
     std::optional<ExtensionCallback> callback = {};     
     std::unique_ptr<adc_driver::IAdcDriver> adc;
     ADS1115settings::Input currentChannel = ADS1115settings::AIN0;
+    
+    std::thread worker;
+    bool running = true;
     
     uint64_t n_samples;
 };

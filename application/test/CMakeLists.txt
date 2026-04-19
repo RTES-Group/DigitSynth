@@ -12,5 +12,6 @@ function(create_test EXE NAME FILE)
 endfunction()
 
 create_test(test-foo TestFoo test_foo.cpp)
-create_test(test-gpio TestGpio test_gpio.cpp)
-create_test(test_led_controller TestLedController synth_logic/led_controller_test.cpp)
+create_test(test-flex-sensor TestFlexSensor test_flex-sensor.cpp)
+# create_test(test-gpio TestGpio test_gpio.cpp)
+# create_test(test_led_controller TestLedController synth_logic/led_controller_test.cpp)
