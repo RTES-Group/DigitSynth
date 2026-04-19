@@ -39,8 +39,9 @@ private:
     void startRipple();
     void stopRipple();
     
-    Pattern& _ripple; //in tests we pass a MockPattern, in practice we pass a PatternRipple
     led_driver::ILedDriver& _tlc;
+    Pattern& _ripple; //in tests we pass a MockPattern, in practice we pass a PatternRipple
+    
     bool rippleRunning = false;
     
     LedPattern pattern = STATUS;
