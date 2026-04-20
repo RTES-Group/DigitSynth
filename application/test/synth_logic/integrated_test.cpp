@@ -1,10 +1,11 @@
 #include <cassert>
+#include <memory>
 #include <vector>
 #include <array>
 
+#include "MockPattern.hpp"
 #include "SynthController.hpp"
 #include "MockTLC59711.hpp"
-#include "MockPattern.hpp"
 #include "MidiTypes.hpp"
 
 namespace button_driver {
@@ -40,20 +41,23 @@ public:
 }
 
 int main() {
-    auto mockTlc     = new led_driver::MockTLC59711();
+    auto mockMidi    = new midi_driver::MockMidiDriver();
+    auto mockTlc     = led_driver::MockTLC59711();
+    auto mockPattern = MockPattern(mockTlc);
     auto mockButtons = new button_driver::MockButtonDriver();
     auto mockFlex    = new flex_sensor::MockFlexSensor();
-    auto mockMidi    = new midi_driver::MockMidiDriver();
 
     SynthController synth(
-        static_cast<led_driver::ILedDriver*>(mockTlc),
-        static_cast<button_driver::IButtonDriver*>(mockButtons),
-        static_cast<flex_sensor::IFlexSensor*>(mockFlex),
-        static_cast<midi_driver::IMidiDriver*>(mockMidi)
+        mockTlc,
+        mockPattern,
+        std::unique_ptr<button_driver::IButtonDriver>(mockButtons), 
+        std::unique_ptr<flex_sensor::IFlexSensor>(mockFlex),
+        std::unique_ptr<midi_driver::IMidiDriver>(mockMidi)
     );
 
     //Am11 should have been sent on construction
     // 6 note-on messages expected
+    std::cout << mockMidi->sentMessages.size() << std::endl;
     assert(mockMidi->sentMessages.size() == 6);
     for (int i = 0; i < 6; i++) {
         assert(mockMidi->sentMessages[i].status == 0x90);

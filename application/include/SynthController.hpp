@@ -9,7 +9,6 @@
 #include "LedController.hpp"
 #include "flex-sensor.h"
 #include "midi-driver.hpp"
-#include "types.h"
 #include "ILedDriver.hpp"
 #include "patterns.h"
 #include "LfoManager.hpp"
@@ -19,10 +18,11 @@
 class SynthController {
 public:
     explicit SynthController(
-        led_driver::ILedDriver *tlc,
-        button_driver::IButtonDriver *buttonDriver,
-        flex_sensor::IFlexSensor     *flexSensor, 
-        midi_driver::IMidiDriver     *midiDriver
+        led_driver::ILedDriver &tlc,
+        led_pattern::IPattern &pattern,
+        std::unique_ptr<button_driver::IButtonDriver> buttonDriver,
+        std::unique_ptr<flex_sensor::IFlexSensor>     flexSensor, 
+        std::unique_ptr<midi_driver::IMidiDriver>     midiDriver
     );
     ~SynthController();
 
@@ -34,7 +34,6 @@ private:
     LfoManager lfoManager;
     std::unique_ptr<midi_driver::IMidiDriver> midiDriver; 
     
-    PatternRipple _ripple;
     LedController ledController;
     
     std::unique_ptr<button_driver::IButtonDriver> buttonDriver;

@@ -4,6 +4,7 @@
 #include "voltage-scaler.h"
 #include <ads1115rpi.h>
 #include <array>
+#include <memory>
 #include <thread>
 
 using namespace flex_sensor;
@@ -19,22 +20,15 @@ void FlexSensor::updateIfNeeded() {
     
     this->n_samples++;
     this->callback.value()(data);
-    // std::this_thread::sleep_for(std::chrono::milliseconds(100));
-    
-    
-    // std::cout << std::string(1000, '\b');
-    // for (int i = 0; i < 4; i++) {
-        // auto channel = (ADS1115settings::Input) i;
-        // printf("| %.3f\t%.3f\t%.3f\t%.3f |", data[i], this->values[channel], this->maxes[channel], this->mins[channel]);
-    // }
-    // printf("\n");
 }
 
 uint64_t FlexSensor::getNSamples() {
     return this->n_samples;
 }
 
-FlexSensor::FlexSensor(adc_driver::IAdcDriver *adcDriver, voltage_scaler::IVoltageScaler *voltageScaler) : adc(adcDriver), vs(voltageScaler) {
+FlexSensor::FlexSensor(std::unique_ptr<adc_driver::IAdcDriver> adcDriver, std::unique_ptr<voltage_scaler::IVoltageScaler> voltageScaler) 
+: adc(std::move(adcDriver)), vs(std::move(voltageScaler)) 
+{
     this->adsCallback = [&] (float f) {
         auto prevChannel = this->currentChannel;
         
