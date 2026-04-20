@@ -28,6 +28,10 @@ add_library(digitsynth_static)
 add_executable(digitsynth)
 target_include_directories(digitsynth PRIVATE include)
 target_include_directories(digitsynth_static PUBLIC include)
+set_property(TARGET digitsynth_static PROPERTY CXX_STANDARD 23)
+set_property(TARGET digitsynth_static PROPERTY CXX_STANDARD_REQUIRED On)
+set_property(TARGET digitsynth        PROPERTY CXX_STANDARD 23)
+set_property(TARGET digitsynth        PROPERTY CXX_STANDARD_REQUIRED On)
 set(SOURCE_DIRECTORY src/)
 
 target_sources(digitsynth
