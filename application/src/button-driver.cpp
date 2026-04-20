@@ -8,7 +8,6 @@ using namespace button_driver;
 ButtonDriver::ButtonDriver() {
     for (ButtonIndex i = 0; i < (ButtonIndex) workers.size(); i++) {
         workers[i] = std::thread([&, i] () {
-            std::cout << "starting worker " << i << std::endl;
             while (this->running) {
                 auto edge = gpio::blockUntilEdge(ButtonDriver::BUTTON_PINS[i], gpiod::line::edge::BOTH);
                 
