@@ -9,7 +9,6 @@
 #include "LedController.hpp"
 #include "flex-sensor.h"
 #include "midi-driver.hpp"
-#include "types.h"
 #include "ILedDriver.hpp"
 #include "patterns.h"
 #include "LfoManager.hpp"

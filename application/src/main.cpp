@@ -27,8 +27,6 @@ int main() {
         c.notify_all();
     });
     
-    auto adc = new adc_driver::Ads1115Driver();
-    auto vs = new voltage_scaler::VoltageScaler();
     auto tlc = led_driver::TLC59711(17, 27);
     auto pattern = PatternRipple(tlc);
     tlc.start();
@@ -36,7 +34,10 @@ int main() {
         tlc,
         pattern,
         std::make_unique<button_driver::ButtonDriver>(),
-        std::make_unique<flex_sensor::FlexSensor>(static_cast<adc_driver::IAdcDriver *>(adc), static_cast<voltage_scaler::IVoltageScaler *>(vs)),
+        std::make_unique<flex_sensor::FlexSensor>(
+            std::make_unique<adc_driver::Ads1115Driver>(),
+            std::make_unique<voltage_scaler::VoltageScaler>()
+        ),
         std::make_unique<midi_driver::MidiDriver>()
     );
    

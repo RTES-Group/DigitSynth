@@ -4,6 +4,7 @@
 #include <ads1115rpi.h>
 #include <chrono>
 #include <cstddef>
+#include <memory>
 #include <random>
 #include <thread>
 
@@ -39,9 +40,9 @@ class MockVoltageScaler : public voltage_scaler::IVoltageScaler {
 };
 
 void testReceiveData() {
-    auto fs = new flex_sensor::FlexSensor(
-        static_cast<adc_driver::IAdcDriver *>(new MockAdcDriver), 
-        static_cast<voltage_scaler::IVoltageScaler *>(new MockVoltageScaler)
+    auto fs = new flex_sensor::FlexSensor(      // heap allocation so we can manually call destructor
+        std::make_unique<MockAdcDriver>(), 
+        std::make_unique<MockVoltageScaler>()
     );
     
     std::vector<std::array<flex_sensor::ExtensionData, 4>> samples;
