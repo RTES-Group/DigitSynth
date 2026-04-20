@@ -86,7 +86,6 @@ SynthController::SynthController(
                 this->chordManager.updateChord(index);
                 for (int i = 0; i < 6; i++){
                     uint8_t note = this->chordManager.getNote(i);
-                    std::cout << "sending note-on\n";
                     midi_message msg = {0x90, note, 120};
                     this->midiDriver->sendMessage(msg);
                 }
