@@ -27,6 +27,11 @@ jobs:
       run: | 
         cd application/
         make deb
+        
+    - name: docs
+      run: | 
+        cd application/
+        make docs
 
     - name: archive-binary
       uses: actions/upload-artifact@v6
@@ -55,3 +60,5 @@ jobs:
         files: |            
           application/build/digitsynth-aarch64.deb
           application/build/digitsynth
+          application/build/digitsynth-documentation.tar.gz
+          application/build/digitsynth-documentation.zip
