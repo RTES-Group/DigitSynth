@@ -15,7 +15,15 @@ SynthController::SynthController(
     std::unique_ptr<button_driver::IButtonDriver> buttonDriver,
     std::unique_ptr<flex_sensor::IFlexSensor> flexSensor, 
     std::unique_ptr<midi_driver::IMidiDriver> midiDriver
-): midiDriver(std::move(midiDriver)), ledController(tlc, pattern), buttonDriver(std::move(buttonDriver)), flexDSP(std::move(flexSensor))
+): 
+    midiDriver(std::move(midiDriver)), 
+    ledController(tlc, pattern, {
+        {SIN, 0.0f},
+        {SQR, 0.5f},
+        {SH,  1.0f}       
+    }), 
+    buttonDriver(std::move(buttonDriver)), 
+    flexDSP(std::move(flexSensor))
 {
     
     auto ports = this->midiDriver->listOutputPorts();
@@ -106,7 +114,7 @@ SynthController::SynthController(
 
 SynthController::~SynthController() {
     for (int i = 0; i < 6; i++){
-        midi_message noteOff = {0x80, chordManager.getNote(i), 0};
+        midi_message noteOff = {0x80, this->chordManager.getNote(i), 0};
         this->midiDriver->sendMessage(noteOff);
     }   
 }
