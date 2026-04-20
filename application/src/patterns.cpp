@@ -1,18 +1,12 @@
-#include "patterns.h"
+#include "patterns.hpp"
 #include <cmath>
 #include <stdexcept>
 #include <sys/timerfd.h>
 #include <unistd.h>
 
-// ---------------------------------------------------------------------------
-// helpers
-// ---------------------------------------------------------------------------
-
 /**
  * Creates a timerfd that fires at the given interval in milliseconds.
  * Returns the file descriptor (caller must close it).
- * Follows course Ch. 3.4: reliable timing via blocking I/O on a timerfd,
- * not sleep_for / usleep.
  */
 static int makeTimerFd(long period_ms) {
     int fd = timerfd_create(CLOCK_MONOTONIC, 0);
@@ -33,22 +27,21 @@ static int makeTimerFd(long period_ms) {
 }
 
 /**
- * Block until the next timer tick.
- * Returns false if _running has been cleared (caller should exit its loop).
+ * Block until the next timer tick
+ * Returns false if _running has been cleared
+ *@param fd  file descriptor of the timerfd to wait on
+ *@param running  reference to the atomic flag that indicates whether the pattern should keep running
  */
 static bool waitTick(int fd, const std::atomic<bool>& running) {
     uint64_t exp = 0;
-    // Blocking read — the course-approved way to create event timing (Ch. 3.4).
     if (read(fd, &exp, sizeof(exp)) < 0)
         return false;
     return running.load();
 }
 
-
-// ---------------------------------------------------------------------------
-// Pattern base
-// ---------------------------------------------------------------------------
-
+/**
+    * IPattern::start starts the pattern in a background thread, which runs the run() method. 
+ */
 void led_pattern::IPattern::start(DoneCallback onDone) {
     if(this->_running){
         return;
