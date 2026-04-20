@@ -1,12 +1,5 @@
 #include "MessageBuilder.hpp"
 
-MessageBuilder::MessageBuilder() {
-    builders[0] = [this](uint8_t v){ return buildCC(74, v); };
-    builders[1] = [this](uint8_t v){ return buildNRPN(6, v); };
-    builders[2] = [this](uint8_t v){ return buildNRPN(18, v); };
-    builders[3] = [this](uint8_t v){ return buildPitchBend(v); };
-}
-
 std::vector<midi_message> MessageBuilder::buildMessages(int index, uint8_t value) {
     if (index < 0 || index >= static_cast<int>(builders.size())) return {};
     return builders[index](value);
