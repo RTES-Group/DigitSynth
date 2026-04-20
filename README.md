@@ -38,7 +38,7 @@ A MIDI-receiving device is required to complete the setup, either a hardware syn
 
 While the flex sensors used in this project have a flat resistance of approximately 12 kΩ (±20%), this value is not universal across all flex sensors. Be sure to check your datasheet before substituting.
 
-**Sensor operating range:** The flat resistance sits in the range 9.6 kΩ – 14.4 kΩ. At full deflection (180°, 8 mm bend radius), the resistance increases by a factor of >4×, giving an estimated fully-bent resistance of ~48 kΩ. This yields a total operating range of roughly 10 kΩ – 50 kΩ.
+**Sensor operating range:** The flat resistance sits in the range 9.6 kΩ – 14.4 kΩ. At full deflection (180°, 8 mm bend radius), the resistance increases by a factor of >4×. We measured the fully-bent resistance to be ~50 kΩ. This yields a total operating range of 9.6 kΩ – 50 kΩ.
 
 **Voltage divider:** A fixed resistor of R₁ = 10 kΩ was chosen, with the flex sensor as R₂ and a 5 V supply:
 
