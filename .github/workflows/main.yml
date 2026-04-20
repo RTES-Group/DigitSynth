@@ -60,10 +60,10 @@ jobs:
       uses: actions/upload-artifact@v6
       with:
         name: digitsynth-docs-targz
-        path: ./application/build/digitsynth-docs.tar.gz
+        path: ./application/build/digitsynth-documentation.tar.gz
         
     - name: archive-docs-zip
       uses: actions/upload-artifact@v6
       with:
         name: digitsynth-docs-zip
-        path: ./application/build/digitsynth-docs.zip
+        path: ./application/build/digitsynth-documentation.zip
