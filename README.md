@@ -34,6 +34,14 @@ A MIDI-receiving device is required to complete the setup, either a hardware syn
 
 ![Wiring diagram](docs/wiring-diagram.jpg)
 
+## Architecture
+
+<details>
+<summary>UML class diagram</summary>
+
+![DigitSynth UML class diagram](docs/digitsynth_uml.svg)
+
+</details>
 
 ## Software Requirements
 
