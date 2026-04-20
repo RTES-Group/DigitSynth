@@ -8,46 +8,106 @@
 #include <array>
 
 /**
- * Physical-to-logical LED channel mapping.
+ * @brief Physical-to-logical LED channel mapping.
  *
- * The TLC59711 drives 8 channels (indices 0–7, up to G0).
- * Reassign these constants to remap any LED to a different physical channel
- * without touching any other code.
+ * The TLC59711 provides 12 output channels (indices RGB0–4).
+ * These constants define the logical mapping of finger LEDs to physical channels for the 8 used LEDs.
  *
- * Left hand: channels 0–3, Right hand: channels 4–7.
- * All LEDs are flex-sensor driven (brightness 0.0–1.0).
+ * changing these values allows remapping LEDs without modifying application logic.
+ *
+ * @note Channel assignments do not strictly follow left/right grouping;
+ *       they reflect the physical wiring layout.
+ *
  */
 namespace Led {
-    // --- Left hand ---
-    static constexpr int L_pinky   = 5;  ///< Thumb flex brightness
-    static constexpr int L_index   = 1;  ///< Index finger flex brightness
-    static constexpr int L_middle  = 4;  ///< Middle finger flex brightness
-    static constexpr int L_ring    = 0;  ///< Ring finger flex brightness
+    static constexpr int L_pinky   = 5; 
+    static constexpr int L_index   = 1;  
+    static constexpr int L_middle  = 4; 
+    static constexpr int L_ring    = 0;  
 
-    // --- Right hand ---
-    static constexpr int R_pinky   = 7;  ///< Thumb flex brightness
-    static constexpr int R_index   = 2;  ///< Index finger flex brightness
-    static constexpr int R_middle  = 6;  ///< Middle finger flex brightness
-    static constexpr int R_ring    = 3;  ///< Ring finger flex brightness
+
+    static constexpr int R_pinky   = 7;  
+    static constexpr int R_index   = 2;  
+    static constexpr int R_middle  = 6;  
+    static constexpr int R_ring    = 3;  
 }
-
+/**
+ * @class LedController
+ * @brief Controls LED behavior based on control modes, LFO settings, and patterns.
+ *
+ * The LedController coordinates between a LED driver and a pattern generator
+ * to produce visual effects. It supports dynamic updates based on control input,
+ * including LFO-driven modulation and pattern switching (e.g., ripple effects).
+ *
+ * Dependencies are injected via interfaces, allowing for flexible implementations
+ * and easy unit testing (e.g., using mock patterns).
+ */
 class LedController {
 public:
-    explicit LedController(led_driver::ILedDriver& tlc, led_pattern::IPattern& pattern, std::unordered_map<LfoShape, float> shapeBrightness);
-    void update(ControlMode mode, bool lfoEnabled, LfoShape shape, std::array<float, 4> flexValues);
+    /**
+     * @brief Constructs a LedController instance.
+     *
+     * @param tlc Reference to an LED driver implementation responsible for
+     *        low-level LED control.
+     * @param pattern Reference to a pattern implementation that defines
+     *        LED animation behavior.
+     * @param shapeBrightness Mapping of LFO shapes to brightness scaling factors.
+     */
+    explicit LedController(led_driver::ILedDriver& tlc,
+                           led_pattern::IPattern& pattern,
+                           std::unordered_map<LfoShape, float> shapeBrightness);
+
+    /**
+     * @brief Updates the LED state based on current control inputs.
+     *
+     * This method should be called periodically to refresh LED output.
+     * It adjusts brightness, pattern behavior, and optional LFO modulation.
+     *
+     * @param mode Current control mode determining LED behavior.
+     * @param lfoEnabled Whether LFO modulation is active.
+     * @param shape The selected LFO waveform shape.
+     * @param flexValues Array of sensor/input values influencing LED output.
+     */
+    void update(ControlMode mode,
+                bool lfoEnabled,
+                LfoShape shape,
+                std::array<float, 4> flexValues);
+
+    /**
+     * @brief Toggles the active LED pattern.
+     *
+     * Switches between available patterns.
+     */
     void togglePattern();
+
 private:
+    /**
+     * @brief Starts the ripple LED pattern.
+     *
+     * Activates a ripple animation if not already running.
+     */
     void startRipple();
+
+    /**
+     * @brief Stops the ripple LED pattern.
+     *
+     * Deactivates the ripple animation and returns to the default pattern.
+     */
     void stopRipple();
-    
-    led_driver::ILedDriver& _tlc;
-    led_pattern::IPattern& _pattern; //in tests we pass a MockPattern, in practice we pass a PatternRipple
-    
+
+    led_driver::ILedDriver& _tlc;       
+    led_pattern::IPattern& _pattern;     
+
+    /**
+     * @brief Mapping of LFO shapes to brightness scaling factors.
+     *
+     * Used to adjust LED intensity depending on the selected waveform.
+     */
     const std::unordered_map<LfoShape, float> shapeBrightness;
-    
-    bool rippleRunning = false;
-    
-    LedPattern _ledPattern = STATUS;
+
+    bool rippleRunning = false; 
+
+    LedPattern _ledPattern = STATUS; 
 };
 
 #endif /* LedController_hpp */

@@ -5,14 +5,28 @@
 
 namespace led_driver {
 
-class MockTLC59711 : public ILedDriver { //a fake TLC that records update() calls for unit testing LedController class
+/**
+ * Test double for led_driver::ILedDriver.
+ *
+ * Records the most recent channel values passed to update(), allowing unit tests
+ * to assert on LED output without requiring real hardware.
+ * Used in LedController unit tests.
+ */
+class MockTLC59711 : public ILedDriver {
 public:
-    void update(const Channels& channels) override { // records channels and updates a flag instead of driving real hardware
+    /**
+     * Records the channel values and sets updateCalled to true.
+     * Does not drive any real hardware.
+     *
+     * @param channels Array of brightness values to record
+     */
+    void update(const Channels& channels) override {
         lastChannels = channels;
         updateCalled = true;
     }
-    Channels lastChannels{};
-    bool updateCalled = false;
+
+    Channels lastChannels{}; ///< Most recent channels passed to update()
+    bool updateCalled = false; ///< True if update() has been called at least once
 };
 
 }
