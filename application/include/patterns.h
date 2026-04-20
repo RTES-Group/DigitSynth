@@ -20,6 +20,7 @@ class Pattern {
 public:
     using DoneCallback = std::function<void()>;
 
+    Pattern(led_driver::ILedDriver &) {};
     virtual ~Pattern() { stop(); }
 
     /**
@@ -55,7 +56,7 @@ private:
  */
 class PatternRipple : public Pattern {
 public:
-    explicit PatternRipple(led_driver::ILedDriver& tlc) : _tlc(tlc) {}
+    explicit PatternRipple(led_driver::ILedDriver& tlc) : Pattern(tlc), _tlc(tlc) {}
 
 protected:
     void run() override;

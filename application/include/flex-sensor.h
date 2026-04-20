@@ -29,7 +29,7 @@ public:
 class FlexSensor : public IFlexSensor {
 public:
         
-    FlexSensor(adc_driver::IAdcDriver *adcDriver, voltage_scaler::IVoltageScaler *voltageScaler);
+    FlexSensor(std::unique_ptr<adc_driver::IAdcDriver> adcDriver, std::unique_ptr<voltage_scaler::IVoltageScaler> voltageScaler);
     ~FlexSensor();
 
     /**
@@ -71,7 +71,7 @@ private:
     std::thread worker;
     bool running = true;
     
-    uint64_t n_samples;
+    uint64_t n_samples = 0;
 };
 
 }
