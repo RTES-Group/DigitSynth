@@ -38,7 +38,6 @@ target_sources(digitsynth
 target_sources(digitsynth_static
 	PUBLIC
 		# Add source files here to build them
-		${SOURCE_DIRECTORY}/foo.cpp
 		${SOURCE_DIRECTORY}/adc-driver.cpp
 		${SOURCE_DIRECTORY}/button-driver.cpp
 		${SOURCE_DIRECTORY}/gpio.cpp
