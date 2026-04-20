@@ -4,6 +4,7 @@
 #include <gpiod.hpp>
 #include <iostream>
 #include <optional>
+#include <vector>
 
 #define BLOCK_TIMEOUT_MS    (500)
 
@@ -64,11 +65,15 @@ bool gpio::getPin(int pin) {
     return value;
 }
 
+std::vector<int> pins;
 std::optional<gpiod::edge_event::event_type> gpio::blockUntilEdge(int pin, gpiod::line::edge edge) {
     if (chip == nullptr) {
         std::cerr << "GPIO chip not set up\n";
         exit(-1);
     }   
+    
+    pins.push_back(pin);
+    for (int p: pins) { std::cout << p << " "; } std::cout << std::endl;
     
     gpiod::line_config line_config; 
     line_config.add_line_settings(pin, gpiod::line_settings().set_direction(gpiod::line::direction::INPUT).set_edge_detection(edge).set_bias(gpiod::line::bias::PULL_DOWN));
