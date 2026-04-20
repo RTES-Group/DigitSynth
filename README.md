@@ -5,8 +5,12 @@
 ---
 ##  Features
 
-DigitSynth is a wearable MIDI controller that interacts with the Roland JD-Xi synthesiser. It allows the user to trigger chords and shape the resulting sound in real time using finger movements. 
-
+-  Real-time filtering control for a MIDI synthesiser
+-  Low-latency digital signal processing on Raspberry Pi
+-  Hardware controls for intuitive parameter adjustment
+-  MIDI CC output with adjustable filter parameters
+-  Responsive LEDs that react in real-time to parameter changes
+-  Open source and fully reproducible
 ---
 ## Hardware Requirements
  
@@ -122,7 +126,6 @@ To run unit tests:
 ```bash 
 make test
 ```
-
 ---
 ## User Guide
 
@@ -142,7 +145,10 @@ A full user guide covering button modes, controls, and MIDI mapping is available
 
 Follow our build journey on Instagram: [![Instagram](https://img.shields.io/badge/Instagram-%23E1306C.svg?style=flat&logo=instagram&logoColor=white)](https://instagram.com/digitsynth_)
 
+We are also awaiting a write-up on [Hackaday.com](https://hackaday.com) about our project, so keep an eye out on their blog!
+
 ---
+
 ## Contributing
 
 See the issues tab for a list of potential contributions. In particular, we would welcome expanding support for other synths. 
