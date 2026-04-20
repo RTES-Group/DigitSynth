@@ -1,10 +1,11 @@
 #include <cassert>
+#include <memory>
 #include <vector>
 #include <array>
 
+#include "MockPattern.hpp"
 #include "SynthController.hpp"
 #include "MockTLC59711.hpp"
-#include "MockPattern.hpp"
 #include "MidiTypes.hpp"
 
 namespace button_driver {
@@ -22,10 +23,10 @@ public:
 namespace flex_sensor {
 class MockFlexSensor : public IFlexSensor {
 public:
-    void registerCallback(ExtensionCallback cb) override { callback = cb; }
+    void registerCallback(ExtensionCallback cb) override { this->callback = cb; }
     void begin() override {}
-    void simulateReading(std::array<float, 4> values) { if (callback) callback(values); }
-    ExtensionCallback callback;
+    void simulateReading(std::array<float, 4> values) { if (this->callback.has_value()) { callback.value()(values); } }
+    std::optional<ExtensionCallback> callback;
 };
 }
 
@@ -34,22 +35,26 @@ class MockMidiDriver : public IMidiDriver {
 public:
     std::vector<std::string> listOutputPorts() override { return {"MockPort"}; }
     void openPort(unsigned int) override {}
-    void sendMessage(const midi_message& msg) override { sentMessages.push_back(msg); }
+    void sendMessage(const midi_message& msg) override { 
+        sentMessages.push_back(msg); 
+    }
     std::vector<midi_message> sentMessages;
 };
 }
 
 int main() {
-    auto mockTlc     = new led_driver::MockTLC59711();
+    auto mockMidi    = new midi_driver::MockMidiDriver();
+    auto mockTlc     = led_driver::MockTLC59711();
+    auto mockPattern = MockPattern(mockTlc);
     auto mockButtons = new button_driver::MockButtonDriver();
     auto mockFlex    = new flex_sensor::MockFlexSensor();
-    auto mockMidi    = new midi_driver::MockMidiDriver();
 
     SynthController synth(
-        static_cast<led_driver::ILedDriver*>(mockTlc),
-        static_cast<button_driver::IButtonDriver*>(mockButtons),
-        static_cast<flex_sensor::IFlexSensor*>(mockFlex),
-        static_cast<midi_driver::IMidiDriver*>(mockMidi)
+        mockTlc,
+        mockPattern,
+        std::make_unique<button_driver::MockButtonDriver>(),
+        std::make_unique<flex_sensor::MockFlexSensor>(),
+        std::make_unique<midi_driver::MockMidiDriver>()
     );
 
     //Am11 should have been sent on construction

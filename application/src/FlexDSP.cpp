@@ -1,8 +1,9 @@
 #include "FlexDSP.hpp"
 #include "flex-sensor.h"
+#include <memory>
 
-FlexDSP::FlexDSP(flex_sensor::IFlexSensor *flexSensor, float sampleRate, float cutoffHz) :
-    flexSensor(flexSensor) 
+FlexDSP::FlexDSP(std::unique_ptr<flex_sensor::IFlexSensor> flexSensor, float sampleRate, float cutoffHz) :
+    flexSensor(std::move(flexSensor)) 
 {
     double normalisedCutoff = cutoffHz / sampleRate;
     for (auto& f : filters) {

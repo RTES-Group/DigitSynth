@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
-#include <iostream>
 
 uint8_t MidiScaler::scaleValue(float value){ // assuming for now that value is in range 0-1
     uint8_t scaled_value = (uint8_t) std::clamp(round(value * 127), 0.0, 127.0);

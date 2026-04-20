@@ -6,7 +6,7 @@
 
 int main(){
     led_driver::MockTLC59711 mockTLC;
-    MockPattern testPattern;
+    MockPattern testPattern(mockTLC);
     LedController ledController(mockTLC, testPattern, {
         {SIN, 0.0f},
         {SQR, 0.5f},

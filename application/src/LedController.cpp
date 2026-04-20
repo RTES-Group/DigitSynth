@@ -1,14 +1,15 @@
 #include "LedController.hpp"
 #include "ILedDriver.hpp"
+#include "patterns.h"
 #include <cstdio>
 
-LedController::LedController(led_driver::ILedDriver& tlc, Pattern& ripple,
+LedController::LedController(led_driver::ILedDriver& tlc, Pattern& pattern,
                              std::unordered_map<LfoShape, float> shapeBrightness)
-    : _tlc(tlc), _ripple(ripple), shapeBrightness(shapeBrightness) {}
+    : _tlc(tlc), _pattern(pattern), shapeBrightness(shapeBrightness) {}
 
 void LedController::update(ControlMode mode, bool lfoEnabled, LfoShape shape, std::array<float, 4> flexValues){
     (void) mode; 
-    if (pattern == RIPPLE) {
+    if (_ledPattern == RIPPLE) {
         if (!rippleRunning) {
             startRipple();
             rippleRunning = true;
@@ -43,18 +44,18 @@ void LedController::update(ControlMode mode, bool lfoEnabled, LfoShape shape, st
 }
 
 void LedController::startRipple() {
-    _ripple.start();
+    _pattern.start();
 }
 
 void LedController::stopRipple() {
-    _ripple.stop();
+    _pattern.stop();
 }
 
 void LedController::togglePattern() {
-    if (pattern == STATUS){
-        pattern = RIPPLE;
+    if (_ledPattern == STATUS){
+        _ledPattern = RIPPLE;
     }
     else {
-        pattern = STATUS;
+        _ledPattern = STATUS;
     }
 }
