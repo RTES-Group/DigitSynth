@@ -38,14 +38,39 @@ A MIDI-receiving device is required to complete the setup, either a hardware syn
 ## Software Requirements
 
 ### Toolchain
-Our build system is CMake, but we provide a simple top-level Makefile to make things easy. Feel free to run the `cmake` commands manually if you are so inclined. 
+Our build system is CMake, but we provide a simple top-level Makefile to make things easy. Feel free to run the `cmake` commands manually if you are so inclined. The `install-deps.sh` script will automatically install dependencies required by DigitSynth. 
 
-### 1. Clone the Repository
+## Installing
+A simple install can be performed using the `.deb` package in the latest release. Download `digitsynth-aarch64.deb`, then run ```bash sudo dpkg -i digitsynth-aarch64.deb``` in your terminal after navigating to the directory into which the archive was downloaded. The standalone binary can also be found in the release.  
+
+## Building
+
+### 1.1 Clone the Repository
  
 ```bash
 git clone https://github.com/RTES-Group/DigitSynth.git
 cd DigitSynth
 ```
+
+OR 
+
+### 1.2 Download the release
+Find the latest release on the right-hand side of this page. Download either the `.tar.gz` or `.zip`. After downloading and navigating to the download directory: 
+
+#### `zip`
+```bash 
+unzip DigitSynth-xx.xx.xx.zip
+
+cd DigitSynth-xx.xx.xx
+```
+
+#### `tar.gz`
+```bash 
+tar -xf DigitSynth-xx.xx.xx.tar.gz
+
+cd DigitSynth-xx.xx.xx
+```
+
 
 ### 2. Install Dependencies
 
@@ -69,13 +94,14 @@ SPI must be enabled before the project will run:
 
 ```bash
 sudo raspi-config
-gpio i2cd
 # Navigate to: Interface Options → SPI → Enable
+# Navigate to: Interface Options → I2C → Enable
 ```
 
 ### 4. Build the project:
 
 ```bash
+cd application/
 make
 ```
 
