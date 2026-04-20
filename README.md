@@ -58,7 +58,7 @@ $$R_{source} = R_1 \| R_2 = \left(\frac{1}{10k} + \frac{1}{50k}\right)^{-1} = 8.
 The ADS1115 is a delta-sigma ADC with an input impedance in the range of 10–22 MΩ (depending on PGA gain setting). At 8.33 kΩ, the source impedance is more than three orders of magnitude below this, making its effect on measurement accuracy negligible.
 
 The ADC automatically determines the minimum and maximum voltages, allowing the voltage range to be suitably scaled to the flex sensor.
----
+
 ## Software Requirements
 
 ### Toolchain
