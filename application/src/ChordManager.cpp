@@ -1,5 +1,6 @@
 #include "ChordManager.hpp"
 
+
 void ChordManager::updateChord(int index){
     currentChordIndex = index;
 }
