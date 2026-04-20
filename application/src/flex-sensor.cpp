@@ -59,7 +59,6 @@ FlexSensor::FlexSensor(std::unique_ptr<adc_driver::IAdcDriver> adcDriver, std::u
 
 FlexSensor::~FlexSensor() {
     this->running = false; 
-    std::cout << "samples: " << this->getNSamples() << std::endl;
     if (worker.joinable()) { worker.join(); }
 }
 
