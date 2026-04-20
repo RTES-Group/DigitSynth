@@ -20,6 +20,7 @@ class SynthController {
 public:
     explicit SynthController(
         led_driver::ILedDriver &tlc,
+        Pattern &pattern,
         std::unique_ptr<button_driver::IButtonDriver> buttonDriver,
         std::unique_ptr<flex_sensor::IFlexSensor>     flexSensor, 
         std::unique_ptr<midi_driver::IMidiDriver>     midiDriver
@@ -34,7 +35,6 @@ private:
     LfoManager lfoManager;
     std::unique_ptr<midi_driver::IMidiDriver> midiDriver; 
     
-    PatternRipple _ripple;
     LedController ledController;
     
     std::unique_ptr<button_driver::IButtonDriver> buttonDriver;
