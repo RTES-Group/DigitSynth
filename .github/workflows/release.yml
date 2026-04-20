@@ -1,4 +1,4 @@
-name: C/C++ CI - RELEASE
+name: C/C++ - Release 
 
 on:
   push:
